@@ -1,0 +1,34 @@
+# macOS
+.DS_Store
+._*
+
+# Secrets — 永遠唔 commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Eval 產物同敏感資料（eval/ 下再有一份，雙重保險）
+eval/reports/
+eval/real-cases/
+eval/responses/
+
+# 媒體二進位（另用 git-lfs 或排除）
+*.png
+*.PNG
+*.jpg
+*.jpeg
+*.mp4
+*.mov
+
+# IDE / 編輯器
+.vscode/
+.idea/
+*.swp
+*.swo

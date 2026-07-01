@@ -1,0 +1,16 @@
+# 真案例唔好 commit — 含敏感個人資料
+real-cases/
+reports/
+responses/
+
+# Secrets — 永遠唔 commit
+.env
+.env.*
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+
+# macOS
+.DS_Store

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: #F5F0E8;
+    font-family: 'Noto Serif TC', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    gap: 60px;
+  }
+  
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: #F5F0E8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px;
+    position: relative;
+  }
+  
+  .slide-number {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 24px;
+    color: #CCCCCC;
+  }
+  
+  .brand {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    font-size: 28px;
+    color: #AAAAAA;
+  }
+  
+  .main-text {
+    font-size: 56px;
+    line-height: 1.8;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+  }
+  
+  .sub-text {
+    font-size: 36px;
+    line-height: 1.8;
+    color: #6A6A6A;
+    margin-top: 40px;
+  }
+  
+  .highlight {
+    font-size: 64px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    font-weight: 700;
+    letter-spacing: 4px;
+  }
+  
+  .action-card {
+    background: #E8E4DC;
+    padding: 60px;
+    border-radius: 20px;
+    margin-top: 40px;
+  }
+  
+  .action-card .main-text {
+    font-size: 48px;
+  }
+  
+  .emoji {
+    font-size: 80px;
+    margin-bottom: 40px;
+  }
+  
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: #CCCCCC;
+    margin: 40px auto;
+  }
+</style>
+</head>
+<body>
+
+<!-- P1: Cover -->
+<div class="slide">
+  <div class="slide-number">1/6</div>
+  <div class="main-text">「我覺得自己<br>讀極都唔得。」</div>
+  <div class="divider"></div>
+  <div class="sub-text">那把說你「冇用」的聲音，<br>其實唔係你。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P2 -->
+<div class="slide">
+  <div class="slide-number">2/6</div>
+  <div class="main-text">讀到攰、又見唔到成績，<br>嗰種懷疑真係好磨人。</div>
+  <div class="divider"></div>
+  <div class="sub-text">先唞一唞。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P3 -->
+<div class="slide">
+  <div class="slide-number">3/6</div>
+  <div class="main-text">你心入面有把聲叫<br>「我冇用」——</div>
+  <div class="divider"></div>
+  <div class="sub-text">但佢只係一個喺你攰嘅時候<br>走出嚟嘅念頭。<br><br>佢嚟咗，佢都會走。<br>你唔需要即刻信佢。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P4 -->
+<div class="slide">
+  <div class="slide-number">4/6</div>
+  <div class="highlight">諸行無常</div>
+  <div class="divider"></div>
+  <div class="main-text">冇一樣嘢係定死嘅。<br><br>你今日覺得自己唔得，<br>唔代表你係咁。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P5: Action Card -->
+<div class="slide">
+  <div class="slide-number">5/6</div>
+  <div class="action-card">
+    <div class="main-text">今晚唔好諗<br>「我要叻晒」。</div>
+    <div class="divider"></div>
+    <div class="sub-text">只揀一樣最細嘅嘢，<br>專心做十分鐘。</div>
+    <div class="divider"></div>
+    <div class="sub-text">行得一步，<br>自然見到下一步。</div>
+  </div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P6: Ending -->
+<div class="slide">
+  <div class="slide-number">6/6</div>
+  <div class="main-text">你肯講出嚟，<br>已經唔係冇用嘅人。</div>
+  <div class="emoji">🌙</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+</body>
+</html>

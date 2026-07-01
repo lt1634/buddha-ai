@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 2 — 成年人・放唔低關係</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: #F5F0E8;
+    font-family: 'Noto Serif TC', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 0;
+  }
+  
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: #F5F0E8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .slide-number {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 24px;
+    color: #CCCCCC;
+    font-weight: 400;
+  }
+  
+  .brand {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    font-size: 28px;
+    color: #AAAAAA;
+  }
+  
+  .main-text {
+    font-size: 56px;
+    line-height: 1.8;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+  }
+  
+  .sub-text {
+    font-size: 36px;
+    line-height: 1.8;
+    color: #6A6A6A;
+    margin-top: 40px;
+  }
+  
+  .highlight {
+    font-size: 64px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    font-weight: 700;
+    letter-spacing: 4px;
+  }
+  
+  .action-card {
+    background: #E8E4DC;
+    padding: 60px 80px;
+    border-radius: 20px;
+    max-width: 800px;
+  }
+  
+  .action-card .main-text {
+    font-size: 48px;
+  }
+  
+  .action-card .sub-text {
+    font-size: 32px;
+  }
+  
+  .emoji {
+    font-size: 80px;
+    margin-bottom: 40px;
+  }
+  
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: #CCCCCC;
+    margin: 40px auto;
+  }
+  
+  .cover-text {
+    font-size: 60px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+  
+  .end-text {
+    font-size: 52px;
+    line-height: 1.8;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+  }
+
+  .small-note {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+    color: #888888;
+  }
+</style>
+</head>
+<body>
+
+<!-- P1: Cover -->
+<div class="slide">
+  <div class="slide-number">1/7</div>
+  <div class="cover-text">令你最辛苦嘅，<br>唔係件事，<br>係嗰個「諗」。</div>
+  <div class="divider"></div>
+  <div class="sub-text">第二支箭，係自己射俾自己嘅。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P2 -->
+<div class="slide">
+  <div class="slide-number">2/7</div>
+  <div class="main-text">一段重要嘅關係斷咗，<br>個心好似有嚿嘢卡住——</div>
+  <div class="divider"></div>
+  <div class="sub-text">呢種反覆，正正因為你<br>曾經好認真去珍惜過。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P3 -->
+<div class="slide">
+  <div class="slide-number">3/7</div>
+  <div class="main-text">每喺腦海重演一次，<br>就再痛一次。</div>
+  <div class="divider"></div>
+  <div class="sub-text">佛法叫呢個做<br>「第二支箭」。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P4 -->
+<div class="slide">
+  <div class="slide-number">4/7</div>
+  <div class="highlight">第二支箭</div>
+  <div class="divider"></div>
+  <div class="main-text">第一支箭，係件事真係發生咗，<br>避唔到。</div>
+  <div class="divider" style="width:40px;"></div>
+  <div class="sub-text">第二支箭，係我哋自己<br>不斷射返俾自己嘅。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P5 -->
+<div class="slide">
+  <div class="slide-number">5/7</div>
+  <div class="main-text">放下唔等於話佢唔重要，<br>亦唔等於要原諒邊個。</div>
+  <div class="divider"></div>
+  <div class="sub-text">放下只係：<br>容許件事過去，<br>容許自己唔再每日射自己一箭。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P6: Action Card -->
+<div class="slide">
+  <div class="slide-number">6/7</div>
+  <div class="action-card">
+    <div class="main-text">當念頭又翻起，<br>唔好趕佢走。</div>
+    <div class="divider"></div>
+    <div class="sub-text">只係輕輕講：<br>「哦，我又喺度諗喇。」</div>
+    <div class="divider"></div>
+    <div class="sub-text">睇得到佢嗰下，<br>你已經唔再完全係佢嘅奴隸。</div>
+  </div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P7: Ending -->
+<div class="slide">
+  <div class="slide-number">7/7</div>
+  <div class="end-text">呢個係慢功夫，唔急得。</div>
+  <div class="divider"></div>
+  <div class="main-text">願意對自己溫柔啲，<br>已經係開始放下。</div>
+  <div class="emoji">🌙</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+</body>
+</html>

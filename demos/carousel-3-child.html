@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 3 — 細路・嬲</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
+  
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  
+  body {
+    background: #F5F0E8;
+    font-family: 'Noto Serif TC', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: 0;
+  }
+  
+  .slide {
+    width: 1080px;
+    height: 1080px;
+    background: #F5F0E8;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 120px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  
+  .slide-number {
+    position: absolute;
+    top: 40px;
+    right: 50px;
+    font-size: 24px;
+    color: #CCCCCC;
+    font-weight: 400;
+  }
+  
+  .brand {
+    position: absolute;
+    bottom: 50px;
+    right: 50px;
+    font-size: 28px;
+    color: #AAAAAA;
+  }
+  
+  .main-text {
+    font-size: 56px;
+    line-height: 1.8;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+  }
+  
+  .sub-text {
+    font-size: 36px;
+    line-height: 1.8;
+    color: #6A6A6A;
+    margin-top: 40px;
+  }
+  
+  .highlight {
+    font-size: 64px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    font-weight: 700;
+    letter-spacing: 4px;
+  }
+  
+  .action-card {
+    background: #E8E4DC;
+    padding: 60px 80px;
+    border-radius: 20px;
+    max-width: 800px;
+  }
+  
+  .action-card .main-text {
+    font-size: 48px;
+  }
+  
+  .action-card .sub-text {
+    font-size: 32px;
+  }
+  
+  .emoji {
+    font-size: 80px;
+    margin-bottom: 40px;
+  }
+  
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: #CCCCCC;
+    margin: 40px auto;
+  }
+  
+  .cover-text {
+    font-size: 60px;
+    line-height: 1.6;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+    font-weight: 700;
+  }
+
+  .child-text {
+    font-size: 58px;
+    line-height: 1.8;
+    color: #4A4A4A;
+    letter-spacing: 2px;
+  }
+
+  .breath-text {
+    font-size: 50px;
+    line-height: 1.8;
+    color: #4A4A4A;
+  }
+  
+  .tips-text {
+    font-size: 28px;
+    line-height: 1.6;
+    color: #888888;
+    margin-top: 60px;
+    max-width: 800px;
+  }
+</style>
+</head>
+<body>
+
+<!-- P1: Cover -->
+<div class="slide">
+  <div class="slide-number">1/5</div>
+  <div class="cover-text">「家姐搶咗我嘅玩具，<br>我好憎佢！」</div>
+  <div class="divider"></div>
+  <div class="sub-text">教細路處理情緒，可以好簡單。</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P2 -->
+<div class="slide">
+  <div class="slide-number">2/5</div>
+  <div class="child-text">哦——<br>個玩具俾人搶咗，<br>梗係嬲啦！</div>
+  <div class="divider"></div>
+  <div class="main-text">你個心係咪好似有團火，<br>熱辣辣？</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P3: Action Card — Breath -->
+<div class="slide">
+  <div class="slide-number">3/5</div>
+  <div class="action-card">
+    <div class="breath-text">慢慢吸一啖大氣，<br>好似聞緊一朵花……</div>
+    <div class="divider"></div>
+    <div class="breath-text">再慢慢呼出嚟，<br>好似吹蠟燭咁。</div>
+    <div class="divider"></div>
+    <div class="sub-text" style="margin-top:0;">呼——</div>
+  </div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P4 -->
+<div class="slide">
+  <div class="slide-number">4/5</div>
+  <div class="child-text">做多兩次。</div>
+  <div class="divider"></div>
+  <div class="main-text">嗰團火，係咪細咗少少？</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+<!-- P5: Ending -->
+<div class="slide">
+  <div class="slide-number">5/5</div>
+  <div class="child-text">嬲嬲係正常嘅，<br>佢好似天上嘅雲，<br>嚟咗一陣，自己會飄走。</div>
+  <div class="divider"></div>
+  <div class="tips-text">家長 tips：情緒嚟到時，<br>先接納，後引導——大人細路都一樣。</div>
+  <div class="emoji">🌙</div>
+  <div class="brand">🌙 指月</div>
+</div>
+
+</body>
+</html>
