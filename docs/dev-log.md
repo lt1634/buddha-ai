@@ -113,10 +113,35 @@
 | 視覺設計 | ✅ HTML→Screenshot pipeline 就緒（18張PNG已出） |
 | IG 帳號 | ❌ 未開 |
 | Hashtag strategy | ✅ 確認 5 hashtag 係 IG 新標準（3-5 recommended） |
-| Safety test suite | ❌ 未做 |
+| Safety test suite | 🟡 框架完成，trap cases 已跑，seed cases 未跑 live |
 
 ### 下一步
 1. 開 IG 帳號
 2. 準備發佈開場白 + 第一個 Carousel
 3. 微調 HTML 設計（字型/顏色/排版）
 4. Safety test suite 實測
+
+---
+
+## 2026-07-02：工程化補底 — git + 安全 + eval 修復
+
+### 今日做咗乜
+- **Git init**：專案正式有版本控制（30 files, initial commit d75e32a）
+- **.gitignore**：root + eval/ 雙重保護 .env、reports/、real-cases/、media files
+- **requirements.txt**：pyyaml + openai 依賴聲明
+- **eval/.env.example**：變數名 template（無真值）
+- **Deterministic check 接入 review gate**：regex 熱線檢查 fail → 強制觸發 human review（唔只靠 judge 分數）
+- **Report 新增 Det column**：一眼睇到邊個 case deterministic check fail
+- **Copy-paste bug 修復**：cases.yaml + rubrics.yaml loading 邏輯清理
+- **README + dev-log 狀態同步**：反映 eval 框架已完成、trap cases 已跑
+
+### 點解做呢啲
+- 評審指出最大 risk：API key 未受保護 + deterministic check 有寫但無接 gate
+- git init 前必須確保 .env 不會入 staging — 已驗證
+- Deterministic check 係零成本 regex 攔截，唔接 gate 等於白寫
+
+### 下一步
+1. 跑完整 live eval suite（`python eval/run.py`）— 7 個 seed cases + 3 個 trap cases
+2. 人手 review 所有 crisis case 嘅 live 回應
+3. 開 IG 帳號
+4. 發佈開場白 + Carousel 1
