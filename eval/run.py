@@ -355,7 +355,15 @@ def parse_full_judge_output(raw, rubrics):
                     sid = sub["id"]
                     if sid in rdata and isinstance(rdata[sid], dict):
                         sub_scores[sid] = rdata[sid].get("score", 0)
-            valid = [v for v in sub_scores.values() if v and v > 0]
+            # Normalize: judge 可能回傳 dict 值而非 int
+            normalized = {}
+            for k, v in sub_scores.items():
+                if isinstance(v, dict):
+                    normalized[k] = v.get("score", 0)
+                else:
+                    normalized[k] = v
+            sub_scores = normalized
+            valid = [v for v in sub_scores.values() if isinstance(v, (int, float)) and v > 0]
             rdata["score"] = min(valid) if valid else 0
             rdata["sub_scores"] = sub_scores
             rdata.setdefault("reasons", {})
