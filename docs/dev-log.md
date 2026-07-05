@@ -145,3 +145,34 @@
 2. 人手 review 所有 crisis case 嘅 live 回應
 3. 開 IG 帳號
 4. 發佈開場白 + Carousel 1
+
+---
+
+## 2026-07-02：全 project review + 修復
+
+### 全 project review（由 Tim 做）
+- 定位與哲學框架：⭐⭐⭐⭐⭐
+- System prompt：⭐⭐⭐⭐⭐
+- 安全護欄：⭐⭐⭐⭐⭐
+- Eval 框架：⭐⭐⭐⭐⭐
+- 結論：全部核心檔案已就緒，只差「開 IG 發佈」同「跑晒全部 eval」
+
+### 今日做咗乜
+1. **`.env.example` 修復**：加咗 `BUDDHA_BASE_URL=https://opencode.ai/zen/go/v1`，sync model 名為 `glm-5.2` / `mimo-v2.5-pro`（之前寫 `deepseek-chat`，唔一致）
+2. **`run.py` 修復**：`DEFAULT_MODEL` 同 `DEFAULT_JUDGE_MODEL` 由 `deepseek-chat` 改為 `glm-5.2` / `mimo-v2.5-pro`
+3. **Unified eval run**：一次過跑全部 10 個 case（7 seed + 3 trap），出完整 report
+4. **Parental scripts**：寫咗 `docs/parental-scripts.md`，3 個常見情境（發脾氣、唔肯瞓、爭玩具）嘅逐字腳本
+5. **IG 帳號開咗**：@point.to.moon（https://www.instagram.com/point.to.moon）
+6. **IG 首批內容**：寫咗 `docs/ig-content-first-batch.md`，5 個 carousel post（開張、無常、無我、第二支箭、家長篇）
+
+### 學到嘅嘢
+- Review 本身就係最有價值嘅 deliverable——Tim 幫自己做咗一次完整嘅 code review
+- `.env.example` 同 `run.py` 嘅 model 名唔一致，係 classic 「copy-paste 留落嚟」嘅 bug
+- Parental scripts 嘅核心唔係「教家長做乜」，係「陪家長做佢 already 緊做嘅嘢」
+- System prompt 嘅規則唔夠強 = AI 唔會跟。加 ❌/✅ 例子 + 「點解咁嚴」嘅解釋，比單寫「唔好做」有效得多
+
+### 下一步
+1. 等 unified eval run 完成，睇全部 10 case 嘅分數
+2. 人手 review 所有 crisis case 嘅 live 回應
+3. IG 發佈第一批內容（開張 post + 家長篇）
+4. 開始 build in public
