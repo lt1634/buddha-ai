@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 1 — 學生壓力</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Noto+Sans+TC:wght@300;400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #1a1a1a;
+    font-family: 'Noto Sans TC', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    color: #f5f0e8;
+    font-size: 24px;
+    margin-bottom: 10px;
+    font-weight: 300;
+    letter-spacing: 2px;
+  }
+
+  .subtitle {
+    color: #888;
+    font-size: 14px;
+    margin-bottom: 40px;
+  }
+
+  .carousel-container {
+    display: flex;
+    gap: 24px;
+    overflow-x: auto;
+    padding: 20px;
+    max-width: 1200px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .slide {
+    flex: 0 0 360px;
+    height: 450px;
+    background: #f5f0e8;
+    border-radius: 16px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px 40px;
+    text-align: center;
+  }
+
+  /* 紋理疊加 */
+  .slide::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: 
+      radial-gradient(ellipse at 20% 80%, rgba(139,115,85,0.08) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(139,115,85,0.06) 0%, transparent 50%);
+    pointer-events: none;
+  }
+
+  /* 裝飾圓圈 */
+  .slide::after {
+    content: '';
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(139,115,85,0.15);
+    border-radius: 50%;
+    top: -40px;
+    right: -40px;
+  }
+
+  .slide-number {
+    position: absolute;
+    top: 20px;
+    left: 24px;
+    font-size: 12px;
+    color: #b8a88a;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .logo {
+    position: absolute;
+    bottom: 20px;
+    right: 24px;
+    font-size: 14px;
+    color: #b8a88a;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .logo-moon {
+    font-size: 18px;
+  }
+
+  /* ===== Slide 1: 封面 ===== */
+  .slide-1 {
+    background: linear-gradient(160deg, #f5f0e8 0%, #ede5d8 100%);
+  }
+
+  .slide-1 .main-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: #2c2418;
+    line-height: 1.6;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-1 .sub-text {
+    font-size: 16px;
+    color: #6b5d4f;
+    font-weight: 300;
+    line-height: 1.8;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-1 .accent-line {
+    width: 40px;
+    height: 2px;
+    background: #b8a88a;
+    margin: 20px auto;
+  }
+
+  /* ===== Slide 2: 共鳴 ===== */
+  .slide-2 .text {
+    font-size: 18px;
+    color: #4a3f35;
+    line-height: 2;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-2 .emoji {
+    font-size: 48px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== Slide 3: 觀照 ===== */
+  .slide-3 .text {
+    font-size: 17px;
+    color: #4a3f35;
+    line-height: 2;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-3 .highlight {
+    display: inline;
+    background: linear-gradient(transparent 60%, rgba(184,168,138,0.3) 60%);
+    font-weight: 500;
+    color: #2c2418;
+  }
+
+  /* ===== Slide 4: 概念 ===== */
+  .slide-4 {
+    background: linear-gradient(160deg, #f5f0e8 0%, #e8e0d0 100%);
+  }
+
+  .slide-4 .concept-label {
+    font-size: 13px;
+    color: #b8a88a;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-4 .concept-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    color: #2c2418;
+    font-weight: 600;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-4 .explain {
+    font-size: 15px;
+    color: #6b5d4f;
+    line-height: 1.8;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== Slide 5: 行動 ===== */
+  .slide-5 {
+    background: linear-gradient(160deg, #2c2418 0%, #3d3228 100%);
+  }
+
+  .slide-5::after {
+    border-color: rgba(184,168,138,0.2);
+  }
+
+  .slide-5 .action-label {
+    font-size: 12px;
+    color: #b8a88a;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-5 .action-text {
+    font-size: 20px;
+    color: #f5f0e8;
+    line-height: 2;
+    font-weight: 300;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-5 .action-text strong {
+    color: #e8dcc8;
+    font-weight: 500;
+  }
+
+  .slide-5 .timer {
+    margin-top: 30px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(184,168,138,0.4);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #b8a88a;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== Slide 6: 收尾 ===== */
+  .slide-6 {
+    background: linear-gradient(160deg, #f5f0e8 0%, #ede5d8 100%);
+  }
+
+  .slide-6 .final-text {
+    font-family: 'Noto Serif TC', serif;
+    font-size: 22px;
+    color: #2c2418;
+    line-height: 1.8;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+  }
+
+  .slide-6 .moon {
+    font-size: 64px;
+    margin-bottom: 24px;
+  }
+
+  .slide-6 .brand {
+    margin-top: 30px;
+    font-size: 16px;
+    color: #b8a88a;
+    letter-spacing: 4px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Navigation hint */
+  .nav-hint {
+    color: #666;
+    font-size: 13px;
+    margin-top: 30px;
+    letter-spacing: 1px;
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .carousel-container {
+      flex-direction: column;
+      align-items: center;
+    }
+    .slide {
+      flex: 0 0 auto;
+      width: 320px;
+      height: 400px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<h1>指月 · Carousel 1</h1>
+<p class="subtitle">學生壓力 — 「我覺得自己讀極都唔得。」</p>
+
+<div class="carousel-container">
+
+  <!-- Slide 1: 封面 -->
+  <div class="slide slide-1">
+    <span class="slide-number">01 / 06</span>
+    <div class="main-text">「我覺得自己<br>讀極都唔得。」</div>
+    <div class="accent-line"></div>
+    <div class="sub-text">那把說你「冇用」的聲音，<br>其實唔係你。</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+  <!-- Slide 2: 共鳴 -->
+  <div class="slide slide-2">
+    <span class="slide-number">02 / 06</span>
+    <div class="emoji">😮‍💨</div>
+    <div class="text">讀到攰、<br>又見唔到成績，<br><br>嗰種懷疑<br>真係好磨人。<br><br>先唞一唞。</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+  <!-- Slide 3: 觀照 -->
+  <div class="slide slide-3">
+    <span class="slide-number">03 / 06</span>
+    <div class="text">你心入面有把聲<br>叫<span class="highlight">「我冇用」</span>——<br><br>但佢只係一個<br>喺你攰嘅時候<br>走出嚟嘅念頭。<br><br>佢嚟咗，佢都會走。<br>你唔需要即刻信佢。</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+  <!-- Slide 4: 概念 -->
+  <div class="slide slide-4">
+    <span class="slide-number">04 / 06</span>
+    <div class="concept-label">諸 行 無 常</div>
+    <div class="concept-text">冇一樣嘢係定死嘅。</div>
+    <div class="explain">你今日覺得自己唔得，<br>唔代表你係咁。</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+  <!-- Slide 5: 行動 -->
+  <div class="slide slide-5">
+    <span class="slide-number">05 / 06</span>
+    <div class="action-label">今 晚 試 下</div>
+    <div class="action-text">唔好諗「我要叻晒」。<br><br>只揀一樣<strong>最細</strong>嘅嘢，<br>專心做<strong>十分鐘</strong>。</div>
+    <div class="timer">⏱️</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+  <!-- Slide 6: 收尾 -->
+  <div class="slide slide-6">
+    <span class="slide-number">06 / 06</span>
+    <div class="moon">🌙</div>
+    <div class="final-text">你肯講出嚟，<br>已經唔係冇用嘅人。</div>
+    <div class="brand">指 月</div>
+    <div class="logo"><span class="logo-moon">🌙</span> 指月</div>
+  </div>
+
+</div>
+
+<p class="nav-hint">← 左右滑動預覽 →</p>
+
+</body>
+</html>
