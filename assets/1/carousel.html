@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>指月 Carousel 2 — 放唔低關係</title>
+<title>指月 Carousel 1 — 學生壓力（視覺優化版）</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
 
@@ -17,9 +17,9 @@
 
   :root {
     --color-bg-dark: #121212;
-    --color-paper: #f7f4ed;
-    --color-ink: #221c15;
-    --color-gold: #bca882;
+    --color-paper: #f7f4ed; /* 貼近 Logo 的米色背景 */
+    --color-ink: #221c15;   /* 墨黑色 */
+    --color-gold: #bca882;  /* 金色月亮色調 */
     --color-gold-light: rgba(188, 168, 130, 0.15);
     --color-gold-glow: rgba(243, 215, 161, 0.3);
     --font-serif: 'Noto Serif TC', serif;
@@ -39,6 +39,7 @@
     overflow-x: hidden;
   }
 
+  /* 頂部標題 */
   header {
     text-align: center;
     margin-bottom: 30px;
@@ -61,27 +62,30 @@
     letter-spacing: 1px;
   }
 
+  /* 外層包裝 - 限制最大寬度與提供滑動定位 */
   .carousel-wrapper {
     position: relative;
     width: 100%;
-    max-width: 440px;
+    max-width: 440px; /* 模擬手機或精緻社交媒體卡片尺寸 */
     margin: 0 auto;
   }
 
+  /* 輪播容器 */
   .carousel-container {
     display: flex;
     gap: 20px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    scrollbar-width: none; /* Firefox */
     padding: 15px 10px 30px 10px;
     perspective: 1000px;
   }
 
   .carousel-container::-webkit-scrollbar {
-    display: none;
+    display: none; /* Safari & Chrome */
   }
 
+  /* 單張卡片設計 */
   .slide {
     flex: 0 0 100%;
     width: 100%;
@@ -101,6 +105,7 @@
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
   }
 
+  /* 墨水與宣紙紋理質感疊加 */
   .slide::before {
     content: '';
     position: absolute;
@@ -113,6 +118,7 @@
     z-index: 1;
   }
 
+  /* 微弱的紙張噪點質感 */
   .slide::after {
     content: '';
     position: absolute;
@@ -123,6 +129,7 @@
     z-index: 2;
   }
 
+  /* 頂部導航資訊 */
   .slide-header {
     display: flex;
     justify-content: space-between;
@@ -134,6 +141,7 @@
     font-weight: 400;
   }
 
+  /* 卡片主體內容 */
   .slide-content {
     display: flex;
     flex-direction: column;
@@ -144,18 +152,9 @@
     padding: 20px 0;
   }
 
-  /* ===== Ink Divider (shared) ===== */
-  .ink-divider {
-    width: 60px;
-    height: 4px;
-    background: var(--color-gold);
-    border-radius: 50% 10% 50% 10%;
-    margin-bottom: 24px;
-  }
+  /* ===== 專屬卡片視覺設計 ===== */
 
-  /* ===== Carousel 2 — 關係 — Slide-specific ===== */
-
-  /* Slide 1: Cover — 溫暖金調 */
+  /* Slide 1: 封面 */
   .slide-1 {
     background: radial-gradient(circle at center, #faf8f5 0%, #ebe2d3 100%);
   }
@@ -171,23 +170,42 @@
     margin-bottom: 24px;
   }
 
+  /* 墨水風格分隔線 */
+  .ink-divider {
+    width: 60px;
+    height: 4px;
+    background: var(--color-gold);
+    border-radius: 50% 10% 50% 10%; /* 模擬毛筆一劃 */
+    margin-bottom: 24px;
+  }
+
   .slide-1 .subtitle-text {
     font-size: 15px;
     color: #5c5245;
     line-height: 1.8;
     font-weight: 300;
     letter-spacing: 0.5px;
-    text-align: center;
   }
 
-  /* Slide 2: 共鳴 — 光芒 */
-  .slide-2 .moon-glow {
+  /* Slide 2: 共鳴 (呼吸光暈與水滴感) */
+  .slide-2 .zen-symbol {
+    position: relative;
+    width: 90px;
+    height: 90px;
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 模擬 Logo 中的溫慢圓月與呼吸光暈 */
+  .moon-glow {
+    position: absolute;
     width: 70px;
     height: 70px;
     background: radial-gradient(circle, #fcd997 0%, #e8c682 70%);
     border-radius: 50%;
     box-shadow: 0 0 30px var(--color-gold-glow);
-    margin-bottom: 28px;
     animation: breathing 4s ease-in-out infinite;
   }
 
@@ -198,44 +216,33 @@
     line-height: 2;
     font-weight: 400;
     letter-spacing: 1px;
-    text-align: center;
   }
 
-  .slide-2 .sub-quote {
-    font-size: 14px;
-    color: #8c7e65;
-    margin-top: 20px;
-    line-height: 1.8;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  /* Slide 3: 重演 */
+  /* Slide 3: 觀照 (半透墨圓與禪意線條) */
   .slide-3 .zen-circle-container {
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     margin-bottom: 24px;
   }
 
-  .slide-3 .enso-ring {
+  /* 繪製一個手繪風一筆圓（Enso Ring） */
+  .enso-ring {
     width: 100%;
     height: 100%;
     stroke: var(--color-gold);
     stroke-width: 1.5;
     fill: none;
     stroke-dasharray: 280;
-    stroke-dashoffset: 40;
+    stroke-dashoffset: 20;
     transform: rotate(-90deg);
   }
 
   .slide-3 .quote-text {
-    font-family: var(--font-serif);
-    font-size: 17px;
-    color: var(--color-ink);
-    line-height: 2;
-    font-weight: 400;
-    text-align: center;
+    font-size: 16px;
+    color: #443c32;
+    line-height: 1.9;
+    font-weight: 300;
   }
 
   .slide-3 .highlight {
@@ -249,16 +256,7 @@
     border-radius: 4px;
   }
 
-  .slide-3 .sub-quote {
-    font-size: 13px;
-    color: #8c7e65;
-    margin-top: 24px;
-    line-height: 1.8;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  /* Slide 4: 概念 — 第二支箭 */
+  /* Slide 4: 概念 */
   .slide-4 .concept-tag {
     font-family: var(--font-serif);
     font-size: 12px;
@@ -277,93 +275,42 @@
     color: var(--color-ink);
     margin-bottom: 20px;
     letter-spacing: 1px;
-    text-align: center;
   }
 
   .slide-4 .concept-desc {
-    font-size: 14px;
-    color: #5c5245;
-    line-height: 1.9;
-    font-weight: 300;
-    text-align: center;
-    max-width: 340px;
-  }
-
-  .slide-4 .arrow-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin: 16px 0;
-  }
-
-  .slide-4 .arrow-item {
-    text-align: center;
-  }
-
-  .slide-4 .arrow-label {
-    font-size: 12px;
-    color: #8c7e65;
-    letter-spacing: 1px;
-    margin-bottom: 4px;
-  }
-
-  .slide-4 .arrow-symbol {
-    font-size: 32px;
-    color: var(--color-gold);
-  }
-
-  /* Slide 5: 洞察 — 放下 */
-  .slide-5 .quote-text {
-    font-family: var(--font-serif);
-    font-size: 17px;
-    color: var(--color-ink);
-    line-height: 2.2;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  .slide-5 .ink-divider {
-    margin-top: 20px;
-  }
-
-  .slide-5 .insight-text {
     font-size: 15px;
     color: #5c5245;
-    line-height: 2;
+    line-height: 1.8;
     font-weight: 300;
-    text-align: center;
-    max-width: 340px;
   }
 
-  /* Slide 6: 行動 — 深色沈靜 */
-  .slide-6 {
+  /* Slide 5: 行動 (深色禪意對比，沉靜有力) */
+  .slide-5 {
     background: linear-gradient(135deg, #241e17 0%, #15110d 100%);
     color: var(--color-paper);
   }
 
-  .slide-6::before {
+  .slide-5::before {
     opacity: 0.15;
     background-image: radial-gradient(circle at 80% 20%, var(--color-gold) 0%, transparent 60%);
   }
 
-  .slide-6 .action-tag {
+  .slide-5 .action-tag {
     font-size: 11px;
     color: var(--color-gold);
     letter-spacing: 4px;
     margin-bottom: 24px;
   }
 
-  .slide-6 .action-title {
-    font-size: 16px;
-    line-height: 2.2;
+  .slide-5 .action-title {
+    font-size: 17px;
+    line-height: 2;
     color: #dfd8cb;
     font-weight: 300;
-    margin-bottom: 24px;
-    text-align: center;
+    margin-bottom: 30px;
   }
 
-  .slide-6 .action-title strong {
+  .slide-5 .action-title strong {
     color: #f7e2bd;
     font-weight: 500;
     font-family: var(--font-serif);
@@ -371,64 +318,78 @@
     padding-bottom: 2px;
   }
 
-  .slide-6 .action-insight {
-    font-size: 13px;
-    color: #8c806d;
-    line-height: 1.8;
-    font-weight: 300;
-    text-align: center;
-    max-width: 340px;
+  /* 沙漏與禪意計時 */
+  .zen-timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border: 1px solid rgba(188, 168, 130, 0.3);
+    border-radius: 50%;
+    position: relative;
   }
 
-  .slide-6 .slide-footer {
-    border-top-color: rgba(188, 168, 130, 0.1);
-    color: #8c806d;
+  .zen-timer::after {
+    content: '';
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border: 1px dashed rgba(188, 168, 130, 0.15);
+    border-radius: 50%;
+    animation: rotate 20s linear infinite;
   }
 
-  /* Slide 7: 收尾 */
-  .slide-7 {
+  .zen-timer svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--color-gold);
+  }
+
+  /* Slide 6: 收尾 (重回 Logo 月下意境) */
+  .slide-6 {
     background: radial-gradient(circle at center, #faf8f5 0%, #ebe2d3 100%);
   }
 
-  .slide-7 .brand-illustration {
+  /* 完全還原 Logo 的手與圓月意境 */
+  .brand-illustration {
     position: relative;
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  .slide-7 .logo-sun-moon {
+  .logo-finger {
     position: absolute;
-    top: 10px;
-    width: 50px;
-    height: 50px;
+    bottom: 5px;
+    width: 60px;
+    height: auto;
+    opacity: 0.85;
+  }
+
+  .logo-sun-moon {
+    position: absolute;
+    top: 5px;
+    width: 55px;
+    height: 55px;
     background: #e8c682;
     border-radius: 50%;
     box-shadow: 0 0 25px rgba(232, 198, 130, 0.4);
   }
 
-  .slide-7 .logo-finger {
-    position: absolute;
-    bottom: 5px;
-    width: 50px;
-    height: auto;
-    opacity: 0.85;
-  }
-
-  .slide-7 .ending-text {
+  .slide-6 .ending-text {
     font-family: var(--font-serif);
-    font-size: 18px;
+    font-size: 20px;
     color: var(--color-ink);
-    line-height: 1.9;
+    line-height: 1.8;
     font-weight: 600;
     letter-spacing: 0.5px;
-    text-align: center;
   }
 
-  .slide-7 .brand-footer {
+  .slide-6 .brand-footer {
     margin-top: 16px;
     font-family: var(--font-serif);
     font-size: 14px;
@@ -437,7 +398,7 @@
     font-weight: 500;
   }
 
-  /* ===== Footer ===== */
+  /* 底部卡片元數據 */
   .slide-footer {
     display: flex;
     justify-content: space-between;
@@ -451,19 +412,27 @@
     width: 100%;
   }
 
+  /* 特別將右下角的「→」箭頭放大，增加點擊與導引動效 */
   .slide-footer span:last-child {
-    font-size: 20px;
+    font-size: 20px; /* 大D！原本是 11px 左右 */
     font-weight: bold;
     color: var(--color-gold);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: inline-block;
   }
 
+  /* 手機或滑鼠懸停時微動效 */
   .slide:hover .slide-footer span:last-child {
     transform: translateX(6px) scale(1.15);
   }
 
-  /* ===== Controls ===== */
+  /* 深色卡片的底部樣式 */
+  .slide-5 .slide-footer {
+    border-top-color: rgba(188, 168, 130, 0.1);
+    color: #8c806d;
+  }
+
+  /* 導航輔助指示 */
   .controls-container {
     display: flex;
     flex-direction: column;
@@ -509,7 +478,7 @@
     fill: #6e6555;
   }
 
-  /* ===== Animations ===== */
+  /* 動畫效果 */
   @keyframes breathing {
     0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 20px rgba(243, 215, 161, 0.3); }
     50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 35px rgba(243, 215, 161, 0.5); }
@@ -520,199 +489,179 @@
     to { transform: rotate(360deg); }
   }
 
+  /* 手機版與平板響應式優化：保持卡片比例與滑動流暢度 */
   @media (max-width: 480px) {
-    body { padding: 15px 10px; }
-    .carousel-wrapper { max-width: 100%; }
-    .slide { padding: 36px 24px; }
-    .slide-1 .main-title { font-size: 26px; }
-    .slide-2 .quote-text { font-size: 16px; }
-    .slide-3 .quote-text { font-size: 15px; }
-    .slide-4 .concept-title { font-size: 20px; }
-    .slide-5 .quote-text { font-size: 15px; }
-    .slide-6 .action-title { font-size: 14px; }
-    .slide-7 .ending-text { font-size: 16px; }
+    body {
+      padding: 15px 10px;
+    }
+    .carousel-wrapper {
+      max-width: 100%;
+    }
+    .slide {
+      height: 480px;
+      padding: 36px 24px;
+    }
+    .slide-1 .main-title {
+      font-size: 26px;
+    }
+    .slide-3 .quote-text {
+      font-size: 15px;
+    }
   }
 </style>
 </head>
 <body>
 
 <header>
-  <h1>指月</h1>
-  <div class="subtitle">放唔低關係 · 第二支箭</div>
+  <h1>指月 · 觀心隨筆</h1>
+  <p class="subtitle">學生壓力篇 — 「我覺得自己讀極都唔得。」</p>
 </header>
 
 <div class="carousel-wrapper">
   <div class="carousel-container" id="carousel">
 
-    <!-- P1: Cover -->
+    <!-- Slide 1: 封面 -->
     <div class="slide slide-1" data-index="0">
       <div class="slide-header">
-        <span>關係</span>
-        <span>01 / 07</span>
+        <span>01 / 06</span>
       </div>
+      
       <div class="slide-content">
-        <div class="main-title">
-          令你最辛苦嘅，<br>唔係件事，<br>係嗰個「諗」。
-        </div>
+        <div class="main-title">「我覺得自己<br>讀極都唔得。」</div>
         <div class="ink-divider"></div>
-        <div class="subtitle-text">
-          第二支箭，係自己射俾自己嘅。
+        <div class="subtitle-text" style="text-align: center;">
+          那把說你「冇用」的聲音，<br>其實唔係你。
         </div>
       </div>
+
       <div class="slide-footer">
-        <span>指月</span>
+        <span>情緒觀照</span>
         <span>→</span>
       </div>
     </div>
 
-    <!-- P2: 卡住嘅心 -->
+    <!-- Slide 2: 共鳴 -->
     <div class="slide slide-2" data-index="1">
       <div class="slide-header">
-        <span>關係</span>
-        <span>02 / 07</span>
+        <span>02 / 06</span>
       </div>
+
       <div class="slide-content">
-        <div class="moon-glow"></div>
-        <div class="quote-text">
-          一段重要嘅關係斷咗，<br>個心好似有嚿嘢卡住——
+        <div class="zen-symbol">
+          <div class="moon-glow"></div>
         </div>
-        <div class="ink-divider"></div>
-        <div class="sub-quote">
-          呢種反覆，正正因為你<br>曾經好認真去珍惜過。
+        <div class="quote-text" style="text-align: center;">
+          讀到攰、又見唔到成績，<br>
+          嗰種懷疑，真係好磨人。<br><br>
+          聽我講，先唞一唞。
         </div>
       </div>
+
       <div class="slide-footer">
-        <span>指月</span>
+        <span>接納當下</span>
         <span>→</span>
       </div>
     </div>
 
-    <!-- P3: 重演 -->
+    <!-- Slide 3: 觀照 -->
     <div class="slide slide-3" data-index="2">
       <div class="slide-header">
-        <span>關係</span>
-        <span>03 / 07</span>
+        <span>03 / 06</span>
       </div>
+
       <div class="slide-content">
         <div class="zen-circle-container">
-          <svg class="enso-ring" viewBox="0 0 100 100">
-            <circle cx="50" cy="50" r="40" class="enso-ring"/>
+          <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
+            <!-- 模擬手繪書法圓圈 -->
+            <path d="M 50,10 A 40,40 0 1,1 49.9,10" class="enso-ring" />
           </svg>
         </div>
-        <div class="quote-text">
-          每喺腦海重演一次，<br>就再<span class="highlight">痛</span>一次。
-        </div>
-        <div class="ink-divider"></div>
-        <div class="sub-quote">
-          佛法叫呢個做<br>「第二支箭」。
+        <div class="quote-text" style="text-align: center;">
+          你心入面有把聲叫<span class="highlight">「我冇用」</span>——<br><br>
+          但佢只係一個，<br>
+          喺你最累時走進來的念頭。<br><br>
+          它來了，它也會走。<br>
+          你不需要立刻相信它。
         </div>
       </div>
+
       <div class="slide-footer">
-        <span>指月</span>
+        <span>覺察心念</span>
         <span>→</span>
       </div>
     </div>
 
-    <!-- P4: 概念 — 第二支箭 -->
+    <!-- Slide 4: 概念 -->
     <div class="slide slide-4" data-index="3">
       <div class="slide-header">
-        <span>關係</span>
-        <span>04 / 07</span>
+        <span>04 / 06</span>
       </div>
+
       <div class="slide-content">
-        <div class="concept-tag">佛學概念</div>
-        <div class="concept-title">第二支箭</div>
-        <div class="arrow-row">
-          <div class="arrow-item">
-            <div class="arrow-label">第一支箭</div>
-            <div class="arrow-symbol">🏹</div>
-            <div class="concept-desc" style="font-size:13px;">件事<br>真係發生咗</div>
-          </div>
-          <div class="arrow-symbol" style="font-size:24px; padding:0 8px;">→</div>
-          <div class="arrow-item">
-            <div class="arrow-label">第二支箭</div>
-            <div class="arrow-symbol">💔</div>
-            <div class="concept-desc" style="font-size:13px;">自己不斷<br>射返俾自己</div>
-          </div>
-        </div>
-        <div class="ink-divider" style="margin-top:12px;"></div>
-        <div class="concept-desc" style="font-size:13px;">
-          避唔到第一支，<br>但可以唔射第二支。
+        <div class="concept-tag">諸行無常</div>
+        <div class="concept-title">無有一物是定死的</div>
+        <div class="concept-desc" style="text-align: center;">
+          考得差是無常，讀不進也是無常。<br><br>
+          你今天覺得自己「不行」，<br>
+          不代表你永遠都是這樣。
         </div>
       </div>
+
       <div class="slide-footer">
-        <span>指月</span>
+        <span>智慧指引</span>
         <span>→</span>
       </div>
     </div>
 
-    <!-- P5: 放下 -->
+    <!-- Slide 5: 行動 -->
     <div class="slide slide-5" data-index="4">
       <div class="slide-header">
-        <span>關係</span>
-        <span>05 / 07</span>
+        <span>05 / 06</span>
       </div>
+
       <div class="slide-content">
-        <div class="quote-text">
-          放下唔等於話佢唔重要，<br>亦唔等於要原諒邊個。
+        <div class="action-tag">今晚試行</div>
+        <div class="action-title" style="text-align: center;">
+          放下「我要一口氣變好」的重擔。<br><br>
+          今晚，只挑一件<strong>最微小</strong>的事，<br>
+          心無旁鶩地做<strong>十分鐘</strong>。
         </div>
-        <div class="ink-divider"></div>
-        <div class="insight-text">
-          放下只係：<br>
-          容許件事過去，<br>
-          容許自己唔再每日射自己一箭。
+        <div class="zen-timer">
+          <!-- 簡約禪意沙漏 SVG -->
+          <svg viewBox="0 0 24 24">
+            <path d="M6 2v6h.01L6 8.01 10 12l-4 4 .01.01H6V22h12v-5.99h-.01L18 16l-4-4 4-3.99-.01-.01H18V2H6zm10 14.5V20H8v-3.5l4-4 4 4zm-4-5l-4-4V4h8v3.5l-4 4z"/>
+          </svg>
         </div>
       </div>
+
       <div class="slide-footer">
-        <span>指月</span>
+        <span>微小的一步</span>
         <span>→</span>
       </div>
     </div>
 
-    <!-- P6: 行動 — 覺察練習 -->
+    <!-- Slide 6: 收尾 -->
     <div class="slide slide-6" data-index="5">
       <div class="slide-header">
-        <span>關係</span>
-        <span>06 / 07</span>
+        <span>06 / 06</span>
       </div>
-      <div class="slide-content">
-        <div class="action-tag">覺察練習</div>
-        <div class="action-title">
-          當念頭又翻起，<br><strong>唔好趕佢走</strong>。
-        </div>
-        <div class="action-title" style="font-size:15px; margin-bottom:20px;">
-          只係輕輕講：<br>
-          「哦，我又喺度諗喇。」
-        </div>
-        <div class="action-insight">
-          睇得到佢嗰下，<br>
-          你已經唔再完全係佢嘅奴隸。
-        </div>
-      </div>
-      <div class="slide-footer">
-        <span>指月</span>
-        <span>→</span>
-      </div>
-    </div>
 
-    <!-- P7: 收尾 -->
-    <div class="slide slide-7" data-index="6">
-      <div class="slide-header">
-        <span>關係</span>
-        <span>07 / 07</span>
-      </div>
       <div class="slide-content">
+        <!-- 以精美 SVG 還原 Logo：明月下的指引手指 -->
         <div class="brand-illustration">
           <div class="logo-sun-moon"></div>
+          <!-- 毛筆線條指尖 SVG -->
           <svg class="logo-finger" viewBox="0 0 100 120" style="fill:none; stroke:#221c15; stroke-width:3; stroke-linecap:round;">
             <path d="M50,110 C46,90 42,70 48,52 C50,47 49,41 51,35 C52,32 50,22 51.5,15 C52,11 53.5,11 54,15 C55.5,25 54,35 55,45 C56,53 58,60 56,68 C54,75 62,72 65,77 C66.5,80 62,84 60,86 C58.5,87 59,92 58.5,95" />
           </svg>
         </div>
-        <div class="ending-text">
-          願意對自己溫柔啲，<br>已經係開始放下。
+        <div class="ending-text" style="text-align: center;">
+          你肯看見這把聲音，<br>
+          就已經跨出了最勇敢的一步。
         </div>
         <div class="brand-footer">指 月</div>
       </div>
+
       <div class="slide-footer" style="justify-content: center;">
         <span>看見月亮，忘記指尖。</span>
       </div>
@@ -722,6 +671,7 @@
 </div>
 
 <div class="controls-container">
+  <!-- 進度指示圓點 -->
   <div class="nav-dots" id="dots">
     <div class="dot active" data-index="0"></div>
     <div class="dot" data-index="1"></div>
@@ -729,8 +679,8 @@
     <div class="dot" data-index="3"></div>
     <div class="dot" data-index="4"></div>
     <div class="dot" data-index="5"></div>
-    <div class="dot" data-index="6"></div>
   </div>
+
   <p class="nav-hint-text">
     <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
     左右滑動或點擊圓點預覽
@@ -742,19 +692,29 @@
   const carousel = document.getElementById('carousel');
   const dots = document.querySelectorAll('.dot');
 
+  // 監聽滾動事件，自動點亮對應的圓點
   carousel.addEventListener('scroll', () => {
     const width = carousel.offsetWidth;
     const activeIndex = Math.round(carousel.scrollLeft / width);
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === activeIndex);
+    
+    dots.forEach((dot, index) => {
+      if (index === activeIndex) {
+        dot.classList.add('active');
+      } else {
+        dot.classList.remove('active');
+      }
     });
   });
 
-  dots.forEach((dot) => {
-    dot.addEventListener('click', () => {
-      const index = parseInt(dot.dataset.index);
+  // 點擊圓點跳轉
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const index = parseInt(e.target.dataset.index);
       const width = carousel.offsetWidth;
-      carousel.scrollTo({ left: index * (width + 20), behavior: 'smooth' });
+      carousel.scrollTo({
+        left: index * width,
+        behavior: 'smooth'
+      });
     });
   });
 </script>

@@ -5,181 +5,595 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>指月 Carousel 3 — 細路・嬲</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;700&display=swap');
-  
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+  * { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :root {
+    --color-bg-dark: #121212;
+    --color-paper: #f7f4ed;
+    --color-ink: #221c15;
+    --color-gold: #bca882;
+    --color-gold-light: rgba(188, 168, 130, 0.15);
+    --color-gold-glow: rgba(243, 215, 161, 0.3);
+    --font-serif: 'Noto Serif TC', serif;
+    --font-sans: 'Noto Sans TC', sans-serif;
+  }
+
   body {
-    background: #F5F0E8;
-    font-family: 'Noto Serif TC', serif;
+    background-color: var(--color-bg-dark);
+    color: #e5dec9;
+    font-family: var(--font-sans);
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 0;
-    gap: 0;
-  }
-  
-  .slide {
-    width: 1080px;
-    height: 1080px;
-    background: #F5F0E8;
-    display: flex;
-    flex-direction: column;
     justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 120px;
-    position: relative;
-    flex-shrink: 0;
+    min-height: 100vh;
+    padding: 30px 20px;
+    overflow-x: hidden;
   }
-  
-  .slide-number {
+
+  header {
+    text-align: center;
+    margin-bottom: 30px;
+    z-index: 10;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    color: var(--color-paper);
+    font-size: 26px;
+    font-weight: 300;
+    letter-spacing: 4px;
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    color: #8c8270;
+    font-size: 14px;
+    font-weight: 300;
+    letter-spacing: 1px;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+
+  .carousel-container {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    padding: 15px 10px 30px 10px;
+    perspective: 1000px;
+  }
+
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 520px;
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    border-radius: 24px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 
+                0 5px 15px rgba(0, 0, 0, 0.2);
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 48px 36px;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+  }
+
+  .slide::before {
+    content: '';
     position: absolute;
-    top: 40px;
-    right: 50px;
-    font-size: 24px;
-    color: #CCCCCC;
+    inset: 0;
+    opacity: 0.25;
+    background-image: 
+      radial-gradient(circle at 10% 10%, var(--color-gold) 0%, transparent 60%),
+      radial-gradient(circle at 90% 90%, #8b7355 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .slide-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: #8c7e65;
     font-weight: 400;
   }
-  
-  .brand {
-    position: absolute;
-    bottom: 50px;
-    right: 50px;
-    font-size: 28px;
-    color: #AAAAAA;
+
+  .slide-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    z-index: 3;
+    padding: 20px 0;
   }
-  
-  .main-text {
-    font-size: 56px;
-    line-height: 1.8;
-    color: #4A4A4A;
-    letter-spacing: 2px;
+
+  .ink-divider {
+    width: 60px;
+    height: 4px;
+    background: var(--color-gold);
+    border-radius: 50% 10% 50% 10%;
+    margin-bottom: 24px;
   }
-  
-  .sub-text {
-    font-size: 36px;
-    line-height: 1.8;
-    color: #6A6A6A;
-    margin-top: 40px;
+
+  /* ===== Carousel 3 — 細路・嬲 — Slide-specific ===== */
+
+  /* Slide 1: Cover — 柔和溫暖，小朋友 feel */
+  .slide-1 {
+    background: radial-gradient(circle at center, #faf8f5 0%, #f0eedf 100%);
   }
-  
-  .highlight {
-    font-size: 64px;
+
+  .slide-1 .speech-bubble {
+    font-family: var(--font-serif);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--color-ink);
     line-height: 1.6;
-    color: #4A4A4A;
-    font-weight: 700;
+    letter-spacing: 1px;
+    text-align: center;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .slide-1 .subtitle-text {
+    font-size: 15px;
+    color: #5c5245;
+    line-height: 1.8;
+    font-weight: 300;
+    letter-spacing: 0.5px;
+    text-align: center;
+  }
+
+  /* Slide 2: 共鳴 — 火團 */
+  .slide-2 .flame-icon {
+    font-size: 64px;
+    margin-bottom: 20px;
+    animation: flicker 1.5s ease-in-out infinite;
+  }
+
+  .slide-2 .child-text {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-ink);
+    line-height: 2;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-align: center;
+  }
+
+  .slide-2 .warm-text {
+    font-size: 15px;
+    color: #6a5c4a;
+    margin-top: 20px;
+    line-height: 1.8;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  /* Slide 3: 呼吸練習 — 柔和禪意 */
+  .slide-3 .breath-circle {
+    width: 72px;
+    height: 72px;
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .slide-3 .breath-ring {
+    width: 100%;
+    height: 100%;
+    stroke: var(--color-gold);
+    stroke-width: 2;
+    fill: none;
+    stroke-dasharray: 200;
+    stroke-dashoffset: 10;
+    animation: breath-rotate 6s ease-in-out infinite;
+    transform-origin: center;
+  }
+
+  .slide-3 .breath-text {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    color: var(--color-ink);
+    line-height: 2.2;
+    font-weight: 400;
+    text-align: center;
+  }
+
+  .slide-3 .breath-sub {
+    font-size: 14px;
+    color: #8c7e65;
+    margin-top: 16px;
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  .slide-3 .exhale-text {
+    font-family: var(--font-serif);
+    font-size: 28px;
+    color: var(--color-gold);
+    font-weight: 500;
+    margin-top: 8px;
     letter-spacing: 4px;
   }
-  
-  .action-card {
-    background: #E8E4DC;
-    padding: 60px 80px;
-    border-radius: 20px;
-    max-width: 800px;
-  }
-  
-  .action-card .main-text {
+
+  /* Slide 4: 進展 — 火光變小 */
+  .slide-4 .flame-small {
     font-size: 48px;
+    margin-bottom: 20px;
+    opacity: 0.7;
   }
-  
-  .action-card .sub-text {
-    font-size: 32px;
+
+  .slide-4 .child-text {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--color-ink);
+    line-height: 2;
+    font-weight: 400;
+    letter-spacing: 1px;
+    text-align: center;
   }
-  
-  .emoji {
-    font-size: 80px;
-    margin-bottom: 40px;
+
+  .slide-4 .check-text {
+    font-size: 16px;
+    color: #5c5245;
+    margin-top: 20px;
+    line-height: 1.8;
+    font-weight: 300;
+    text-align: center;
   }
-  
-  .divider {
-    width: 60px;
-    height: 2px;
-    background: #CCCCCC;
-    margin: 40px auto;
+
+  /* Slide 5: 收尾 + 家長 tips */
+  .slide-5 {
+    background: radial-gradient(circle at center, #faf8f5 0%, #ebe2d3 100%);
   }
-  
-  .cover-text {
+
+  .slide-5 .cloud-icon {
     font-size: 60px;
-    line-height: 1.6;
-    color: #4A4A4A;
-    letter-spacing: 2px;
-    font-weight: 700;
+    margin-bottom: 16px;
   }
 
-  .child-text {
-    font-size: 58px;
-    line-height: 1.8;
-    color: #4A4A4A;
-    letter-spacing: 2px;
+  .slide-5 .child-text {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    color: var(--color-ink);
+    line-height: 2;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-align: center;
   }
 
-  .breath-text {
-    font-size: 50px;
+  .slide-5 .parent-tip {
+    font-size: 12px;
+    color: #8c7e65;
     line-height: 1.8;
-    color: #4A4A4A;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 20px;
+    padding: 12px 20px;
+    border: 1px solid rgba(188, 168, 130, 0.3);
+    border-radius: 12px;
+    max-width: 340px;
   }
-  
-  .tips-text {
-    font-size: 28px;
-    line-height: 1.6;
-    color: #888888;
-    margin-top: 60px;
-    max-width: 800px;
+
+  .slide-5 .parent-tip strong {
+    color: var(--color-gold);
+    font-weight: 500;
+  }
+
+  .slide-5 .brand-footer {
+    margin-top: 12px;
+    font-family: var(--font-serif);
+    font-size: 14px;
+    letter-spacing: 6px;
+    color: var(--color-gold);
+    font-weight: 500;
+  }
+
+  /* ===== Footer ===== */
+  .slide-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 3;
+    font-size: 11px;
+    color: #9c8e75;
+    letter-spacing: 1px;
+    border-top: 1px solid rgba(139, 115, 85, 0.08);
+    padding-top: 16px;
+    width: 100%;
+  }
+
+  .slide-footer span:last-child {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--color-gold);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+  }
+
+  .slide:hover .slide-footer span:last-child {
+    transform: translateX(6px) scale(1.15);
+  }
+
+  /* ===== Controls ===== */
+  .controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-top: 20px;
+    z-index: 10;
+  }
+
+  .nav-dots {
+    display: flex;
+    gap: 8px;
+  }
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #444;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .dot.active {
+    background: var(--color-gold);
+    transform: scale(1.3);
+    box-shadow: 0 0 8px var(--color-gold);
+  }
+
+  .nav-hint-text {
+    color: #6e6555;
+    font-size: 12px;
+    letter-spacing: 2px;
+    font-weight: 300;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-hint-text svg {
+    width: 14px;
+    height: 14px;
+    fill: #6e6555;
+  }
+
+  /* ===== Animations ===== */
+  @keyframes flicker {
+    0%, 100% { transform: scale(1); opacity: 0.9; }
+    50% { transform: scale(1.08); opacity: 1; }
+  }
+
+  @keyframes breath-rotate {
+    0% { transform: rotate(0deg); opacity: 0.7; }
+    50% { transform: rotate(180deg); opacity: 1; }
+    100% { transform: rotate(360deg); opacity: 0.7; }
+  }
+
+  @keyframes breathing {
+    0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 20px rgba(243, 215, 161, 0.3); }
+    50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 35px rgba(243, 215, 161, 0.5); }
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 15px 10px; }
+    .carousel-wrapper { max-width: 100%; }
+    .slide { padding: 36px 24px; }
+    .slide-1 .speech-bubble { font-size: 22px; }
+    .slide-2 .child-text { font-size: 18px; }
+    .slide-3 .breath-text { font-size: 16px; }
+    .slide-4 .child-text { font-size: 19px; }
+    .slide-5 .child-text { font-size: 18px; }
   }
 </style>
 </head>
 <body>
 
-<!-- P1: Cover -->
-<div class="slide">
-  <div class="slide-number">1/5</div>
-  <div class="cover-text">「家姐搶咗我嘅玩具，<br>我好憎佢！」</div>
-  <div class="divider"></div>
-  <div class="sub-text">教細路處理情緒，可以好簡單。</div>
-  <div class="brand">🌙 指月</div>
-</div>
+<header>
+  <h1>指月</h1>
+  <div class="subtitle">細路・嬲 · 情緒小練習</div>
+</header>
 
-<!-- P2 -->
-<div class="slide">
-  <div class="slide-number">2/5</div>
-  <div class="child-text">哦——<br>個玩具俾人搶咗，<br>梗係嬲啦！</div>
-  <div class="divider"></div>
-  <div class="main-text">你個心係咪好似有團火，<br>熱辣辣？</div>
-  <div class="brand">🌙 指月</div>
-</div>
+<div class="carousel-wrapper">
+  <div class="carousel-container" id="carousel">
 
-<!-- P3: Action Card — Breath -->
-<div class="slide">
-  <div class="slide-number">3/5</div>
-  <div class="action-card">
-    <div class="breath-text">慢慢吸一啖大氣，<br>好似聞緊一朵花……</div>
-    <div class="divider"></div>
-    <div class="breath-text">再慢慢呼出嚟，<br>好似吹蠟燭咁。</div>
-    <div class="divider"></div>
-    <div class="sub-text" style="margin-top:0;">呼——</div>
+    <!-- P1: Cover -->
+    <div class="slide slide-1" data-index="0">
+      <div class="slide-header">
+        <span>細路・嬲</span>
+        <span>01 / 05</span>
+      </div>
+      <div class="slide-content">
+        <div class="speech-bubble">
+          「家姐搶咗我嘅玩具，<br>我好憎佢！」
+        </div>
+        <div class="ink-divider"></div>
+        <div class="subtitle-text">
+          教細路處理情緒，可以好簡單。
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>指月</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- P2: 先接納 -->
+    <div class="slide slide-2" data-index="1">
+      <div class="slide-header">
+        <span>細路・嬲</span>
+        <span>02 / 05</span>
+      </div>
+      <div class="slide-content">
+        <div class="flame-icon">🔥</div>
+        <div class="child-text">
+          哦——<br>個玩具俾人搶咗，<br>梗係嬲啦！
+        </div>
+        <div class="ink-divider"></div>
+        <div class="warm-text">
+          你個心係咪好似有團火，<br>熱辣辣？
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>指月</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- P3: 呼吸練習 -->
+    <div class="slide slide-3" data-index="2">
+      <div class="slide-header">
+        <span>細路・嬲</span>
+        <span>03 / 05</span>
+      </div>
+      <div class="slide-content">
+        <div class="breath-circle">
+          <svg class="breath-ring" viewBox="0 0 80 80">
+            <circle cx="40" cy="40" r="30"/>
+          </svg>
+        </div>
+        <div class="breath-text">
+          慢慢吸一啖大氣，<br>好似聞緊一朵花……
+        </div>
+        <div class="ink-divider" style="width:40px;"></div>
+        <div class="breath-text">
+          再慢慢呼出嚟，<br>好似吹蠟燭咁。
+        </div>
+        <div class="breath-sub">呼——</div>
+      </div>
+      <div class="slide-footer">
+        <span>指月</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- P4: 進展 -->
+    <div class="slide slide-4" data-index="3">
+      <div class="slide-header">
+        <span>細路・嬲</span>
+        <span>04 / 05</span>
+      </div>
+      <div class="slide-content">
+        <div class="flame-small">🔥</div>
+        <div class="child-text">
+          做多兩次。
+        </div>
+        <div class="ink-divider"></div>
+        <div class="check-text">
+          嗰團火，係咪細咗少少？
+        </div>
+      </div>
+      <div class="slide-footer">
+        <span>指月</span>
+        <span>→</span>
+      </div>
+    </div>
+
+    <!-- P5: 收尾 -->
+    <div class="slide slide-5" data-index="4">
+      <div class="slide-header">
+        <span>細路・嬲</span>
+        <span>05 / 05</span>
+      </div>
+      <div class="slide-content">
+        <div class="cloud-icon">☁️</div>
+        <div class="child-text">
+          嬲嬲係正常嘅，<br>佢好似天上嘅雲，<br>嚟咗一陣，自己會飄走。
+        </div>
+        <div class="ink-divider"></div>
+        <div class="parent-tip">
+          <strong>家長提示</strong><br>
+          情緒嚟到時，先接納，後引導——<br>大人細路都一樣。
+        </div>
+        <div class="brand-footer">指 月</div>
+      </div>
+      <div class="slide-footer" style="justify-content: center;">
+        <span>先接納，後引導。</span>
+      </div>
+    </div>
+
   </div>
-  <div class="brand">🌙 指月</div>
 </div>
 
-<!-- P4 -->
-<div class="slide">
-  <div class="slide-number">4/5</div>
-  <div class="child-text">做多兩次。</div>
-  <div class="divider"></div>
-  <div class="main-text">嗰團火，係咪細咗少少？</div>
-  <div class="brand">🌙 指月</div>
+<div class="controls-container">
+  <div class="nav-dots" id="dots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+  </div>
+  <p class="nav-hint-text">
+    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+    左右滑動或點擊圓點預覽
+    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </p>
 </div>
 
-<!-- P5: Ending -->
-<div class="slide">
-  <div class="slide-number">5/5</div>
-  <div class="child-text">嬲嬲係正常嘅，<br>佢好似天上嘅雲，<br>嚟咗一陣，自己會飄走。</div>
-  <div class="divider"></div>
-  <div class="tips-text">家長 tips：情緒嚟到時，<br>先接納，後引導——大人細路都一樣。</div>
-  <div class="emoji">🌙</div>
-  <div class="brand">🌙 指月</div>
-</div>
+<script>
+  const carousel = document.getElementById('carousel');
+  const dots = document.querySelectorAll('.dot');
+
+  carousel.addEventListener('scroll', () => {
+    const width = carousel.offsetWidth;
+    const activeIndex = Math.round(carousel.scrollLeft / width);
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === activeIndex);
+    });
+  });
+
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const index = parseInt(dot.dataset.index);
+      const width = carousel.offsetWidth;
+      carousel.scrollTo({ left: index * (width + 20), behavior: 'smooth' });
+    });
+  });
+</script>
 
 </body>
 </html>
