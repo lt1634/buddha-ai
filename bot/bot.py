@@ -48,7 +48,7 @@ LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://integrate.api.nvidia.com/v1")
 LLM_MODEL = os.getenv("LLM_MODEL", "meta/llama-4-maverick-17b-128e-instruct")
 LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "4000"))
 
-SYSTEM_PROMPT_PATH = Path(__file__).parent / "prompts" / "system-prompt.md"
+SYSTEM_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "system-prompt.md"
 MAX_HISTORY = 20  # 每個用戶保留最近 20 輪對話
 CRISIS_ROUNDS_LIMIT = 3  # 危機對話最多 3 輪，之後彈熱線 + 結束
 
@@ -184,8 +184,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     await context.bot.send_chat_action(chat_id=update.effective_chat.id, action="typing")
     llm_response = await call_llm(history, model=user_models[user_id])
 
-    # ---- 4. 安全 regex 層（output）----
-    if not check_output_safety(llm_response):
+    # ---- 4. 安全 regex 層（output）— 只在 crisis context 啟用 ----
+    # 正常對話（含口頭禪）唔檢查 output，避免誤殺 LLM 引用用戶字眼
+    # 只有當對話正處於 crisis 輪數時先啟用嚴格禁字
+    if crisis_rounds[user_id] > 0 and not check_output_safety(llm_response):
         # LLM 回應包含禁止字眼 → fallback
         fallback = build_safety_fallback()
         log_crisis(user_id, user_text, f"[OUTPUT BLOCKED] {llm_response[:100]}")
