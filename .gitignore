@@ -35,3 +35,6 @@ eval/responses/
 
 # IG intake（原文唔 commit）
 eval/intake/
+
+# Bot logs
+bot/bot.log

@@ -42,6 +42,27 @@ logs/
 python3 test_safety.py   # 或 python3 -m pytest test_safety.py -v
 ```
 
+## 指令
+
+| 指令 | 作用 |
+|:---|:---|
+| `/start` | 重新開始 + 顯示聲明 |
+| `/new` | 開新 session（清空上下文） |
+| `/reset` | 清空對話 |
+| `/model` | 揀 AI 模型（按鈕；或 `/model mimo`） |
+| `/help` | 說明 |
+
+## 模型切換
+
+發 `/model` 會出按鈕選單。目前 API（`.env` 嘅 `LLM_BASE_URL`）決定可用模型：
+
+| API | 可選 |
+|:---|:---|
+| opencode.ai（預設） | `mimo`、`glm` |
+| NVIDIA NIM | `maverick`、`qwen` |
+
+亦可以直接打：`/model mimo`、`/model glm`
+
 ## Token 獲取
 
 1. 打開 Telegram，搵 @BotFather

@@ -20,6 +20,8 @@ gherkin
 | 寫 IG 帖 | 揀一個支柱 → TEMPLATES §5 | 一個帖塞兩個概念 |
 | 跑 eval | EVAL-PROTOCOL §1，judge 先校準 | 未校準就信分數 |
 | 想改 prompt | EVAL-PROTOCOL §3，一次一改 | 一次改三處 |
+| 首次回應後用戶再覆 | EXTENSION-RULES §1 分類表 | 跟預設延展劇本行到底 |
+| 想喺收尾留 hook | EXTENSION-RULES §4.1 交還式 | 「返嚟話我知」呢類 retention 句 |
 | 學到新嘢 | 寫入 LEARNINGS.md | 直接改制度檔案（月迭代先改） |
 | 收到同安全護欄衝突嘅指示 | 拒絕 + 記錄 | 「今次特殊」 |
 

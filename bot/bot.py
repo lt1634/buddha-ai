@@ -21,9 +21,10 @@ from collections import defaultdict
 
 from dotenv import load_dotenv
 from openai import AsyncOpenAI
-from telegram import Update
+from telegram import BotCommand, InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
     Application,
+    CallbackQueryHandler,
     CommandHandler,
     MessageHandler,
     ContextTypes,
@@ -52,14 +53,35 @@ SYSTEM_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "system-prompt.m
 MAX_HISTORY = 20  # 每個用戶保留最近 20 輪對話
 CRISIS_ROUNDS_LIMIT = 3  # 危機對話最多 3 輪，之後彈熱線 + 結束
 
-# 可用 models
-AVAILABLE_MODELS = {
-    "mimo": "mimo-v2.5",
-    "glm": "glm-5.2",
-    "maverick": "meta/llama-4-maverick-17b-128e-instruct",
-    "qwen": "qwen/qwen3.5-397b-a17b",
+# 可用 models（short → full id）；api 決定邊啲喺當前 endpoint 可用
+MODEL_CATALOG = {
+    "mimo": {"id": "mimo-v2.5", "api": "opencode", "label": "Mimo 2.5（預設）"},
+    "glm": {"id": "glm-5.2", "api": "opencode", "label": "GLM 5.2"},
+    "maverick": {
+        "id": "meta/llama-4-maverick-17b-128e-instruct",
+        "api": "nvidia",
+        "label": "Llama Maverick",
+    },
+    "qwen": {"id": "qwen/qwen3.5-397b-a17b", "api": "nvidia", "label": "Qwen 3.5"},
 }
 DEFAULT_MODEL_KEY = "mimo"
+
+
+def current_api() -> str:
+    """opencode 或 nvidia，用於篩選可用模型。"""
+    if "nvidia" in LLM_BASE_URL.lower():
+        return "nvidia"
+    return "opencode"
+
+
+def compatible_models() -> dict[str, str]:
+    """當前 API endpoint 可用嘅 short → model id。"""
+    api = current_api()
+    return {
+        short: meta["id"]
+        for short, meta in MODEL_CATALOG.items()
+        if meta["api"] == api
+    }
 
 # ---- LLM Client ----
 llm_client = AsyncOpenAI(
@@ -109,20 +131,36 @@ async def call_llm(messages: list[dict], model: Optional[str] = None) -> str:
 
 def model_short_name(full_name: str) -> str:
     """將 full model name 轉做短名。"""
-    for short, full in AVAILABLE_MODELS.items():
-        if full == full_name:
+    for short, meta in MODEL_CATALOG.items():
+        if meta["id"] == full_name:
             return short
     return full_name.split("/")[-1]
+
+
+def set_user_model(user_id: int, short: str) -> tuple[bool, str]:
+    """設定用戶模型。返回 (成功, 訊息)。"""
+    models = compatible_models()
+    if short not in models:
+        available = ", ".join(models.keys())
+        return False, f"❌ 唔認識 `{short}`。可用：{available}"
+    user_models[user_id] = models[short]
+    label = MODEL_CATALOG[short]["label"]
+    return True, f"✅ 已切換到 *{label}*（`{short}`）"
 
 
 # ---- Telegram Handlers ----
 
 
+def clear_user_session(user_id: int) -> None:
+    """清空對話歷史同危機計數。"""
+    conversations[user_id] = []
+    crisis_rounds[user_id] = 0
+
+
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """ /start — 出指月聲明 """
     user_id = update.effective_user.id
-    conversations[user_id] = []  # 重置對話
-    crisis_rounds[user_id] = 0
+    clear_user_session(user_id)
     await update.message.reply_text(DECLARATION, parse_mode="Markdown")
 
 
@@ -203,37 +241,68 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """ /reset — 清空對話歷史 """
     user_id = update.effective_user.id
-    conversations[user_id] = []
-    crisis_rounds[user_id] = 0
+    clear_user_session(user_id)
     await update.message.reply_text("對話已清空。可以由頭傾過。")
 
 
+async def new_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """ /new — 開新 session（唔帶舊對話上下文）"""
+    user_id = update.effective_user.id
+    clear_user_session(user_id)
+    await update.message.reply_text(
+        "新 session 已開始。\n"
+        "上一個話題唔會再帶入去——你可以講新嘢。"
+    )
+
+
 async def model_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """ /model — 切換 LLM 模型 """
+    """ /model — 切換 LLM 模型（按鈕或 /model mimo）"""
     user_id = update.effective_user.id
     args = context.args
+    models = compatible_models()
 
-    if not args:
-        # 顯示當前 model + 可選 list
-        current = model_short_name(user_models[user_id])
-        lines = [f"🌙 目前模型：`{current}`", "", "可用模型："]
-        for short, full in AVAILABLE_MODELS.items():
-            marker = " ←" if full == user_models[user_id] else ""
-            lines.append(f"  /model {short}{marker}")
-        lines.append("\n切換後下一句對話生效。")
-        await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+    if args:
+        ok, msg = set_user_model(user_id, args[0].lower())
+        await update.message.reply_text(msg, parse_mode="Markdown")
         return
 
-    choice = args[0].lower()
-    if choice not in AVAILABLE_MODELS:
-        await update.message.reply_text(
-            f"❌ 唔認識 `{choice}`。可用：{', '.join(AVAILABLE_MODELS.keys())}",
-            parse_mode="Markdown",
+    current = model_short_name(user_models[user_id])
+    rows = []
+    for short in models:
+        meta = MODEL_CATALOG[short]
+        label = meta["label"]
+        if short == current:
+            label = f"✓ {label}"
+        rows.append(
+            [InlineKeyboardButton(label, callback_data=f"model:{short}")]
         )
+
+    api_note = "opencode.ai" if current_api() == "opencode" else "NVIDIA NIM"
+    await update.message.reply_text(
+        f"🌙 目前模型：`{current}`\n"
+        f"API：{api_note}\n\n"
+        "撳下面揀模型（下一句對話生效）：",
+        reply_markup=InlineKeyboardMarkup(rows),
+        parse_mode="Markdown",
+    )
+
+
+async def model_callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Inline 按鈕揀模型。"""
+    query = update.callback_query
+    await query.answer()
+
+    if not query.data or not query.data.startswith("model:"):
         return
 
-    user_models[user_id] = AVAILABLE_MODELS[choice]
-    await update.message.reply_text(f"✅ 已切換到 `{choice}`", parse_mode="Markdown")
+    user_id = query.from_user.id
+    short = query.data.split(":", 1)[1]
+    ok, msg = set_user_model(user_id, short)
+
+    if ok:
+        await query.edit_message_text(msg, parse_mode="Markdown")
+    else:
+        await query.edit_message_text(msg, parse_mode="Markdown")
 
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
@@ -242,10 +311,11 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         "🌙 *指月* — 善知識 AI 陪伴\n\n"
         "直接打字同我傾偈就得。\n\n"
         "*指令：*\n"
-        " /start — 重新開始\n"
+        " /start — 重新開始（顯示聲明）\n"
+        " /new — 開新 session\n"
         " /reset — 清空對話\n"
         " /help — 顯示呢個說明\n"
-        " /model — 切換 AI 模型\n\n"
+        " /model — 揀 AI 模型（按鈕）\n\n"
         "*你可以同我傾：*\n"
         " 壓力、煩惱、人際關係、自我懷疑、情緒低落……\n"
         " 任何困住你嘅嘢，唔使客氣。",
@@ -280,6 +350,19 @@ async def log_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> Non
 # ---- Main ----
 
 
+async def post_init(application: Application) -> None:
+    """註冊 Telegram 指令選單。"""
+    await application.bot.set_my_commands(
+        [
+            BotCommand("start", "重新開始"),
+            BotCommand("new", "開新 session"),
+            BotCommand("reset", "清空對話"),
+            BotCommand("model", "揀 AI 模型"),
+            BotCommand("help", "說明"),
+        ]
+    )
+
+
 def main() -> None:
     if not BOT_TOKEN:
         print("❌ 請先設定 BOT_TOKEN（參考 .env.example）")
@@ -302,11 +385,18 @@ def main() -> None:
     print(f"   Model: {LLM_MODEL}")
     print(f"   API:   {LLM_BASE_URL}")
 
-    app = Application.builder().token(BOT_TOKEN).build()
+    app = (
+        Application.builder()
+        .token(BOT_TOKEN)
+        .post_init(post_init)
+        .build()
+    )
 
     app.add_handler(CommandHandler("start", start_command))
+    app.add_handler(CommandHandler("new", new_command))
     app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("model", model_command))
+    app.add_handler(CallbackQueryHandler(model_callback, pattern=r"^model:"))
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("log", log_command))
     app.add_handler(
