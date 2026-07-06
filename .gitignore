@@ -32,3 +32,6 @@ eval/responses/
 .idea/
 *.swp
 *.swo
+
+# IG intake（原文唔 commit）
+eval/intake/
