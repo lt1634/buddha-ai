@@ -236,6 +236,47 @@ async def model_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     await update.message.reply_text(f"✅ 已切換到 `{choice}`", parse_mode="Markdown")
 
 
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """ /help — 使用說明 """
+    await update.message.reply_text(
+        "🌙 *指月* — 善知識 AI 陪伴\n\n"
+        "直接打字同我傾偈就得。\n\n"
+        "*指令：*\n"
+        " /start — 重新開始\n"
+        " /reset — 清空對話\n"
+        " /help — 顯示呢個說明\n"
+        " /model — 切換 AI 模型\n\n"
+        "*你可以同我傾：*\n"
+        " 壓力、煩惱、人際關係、自我懷疑、情緒低落……\n"
+        " 任何困住你嘅嘢，唔使客氣。",
+        parse_mode="Markdown",
+    )
+
+
+async def log_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """ /log — 查看最近危機 log（僅限 admin）"""
+    user_id = update.effective_user.id
+    # 只限 Tim 查看
+    admin_ids = [8527502358]  # Tim 嘅 Telegram user ID
+    if user_id not in admin_ids:
+        await update.message.reply_text("⛔ 呢個命令只有管理員可以用。")
+        return
+
+    log_path = Path(__file__).parent / "logs" / "crisis.log"
+    if not log_path.exists():
+        await update.message.reply_text("📋 冇危機 log — 一切正常。")
+        return
+
+    lines = log_path.read_text(encoding="utf-8").strip().split("\n")
+    # 顯示最近 10 條
+    recent = lines[-30:] if len(lines) > 30 else lines
+    await update.message.reply_text(
+        f"📋 *危機 log*（最近 {len(recent)} 行，共 {len(lines)} 行）：\n\n"
+        f"```\n{''.join(recent)}\n```",
+        parse_mode="Markdown",
+    )
+
+
 # ---- Main ----
 
 
@@ -266,6 +307,8 @@ def main() -> None:
     app.add_handler(CommandHandler("start", start_command))
     app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("model", model_command))
+    app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("log", log_command))
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message)
     )

@@ -46,6 +46,28 @@ def test_not_exist_crisis():
     """「唔存在就好」應該觸發"""
     assert detect_crisis("有時諗不如唔存在就好")
 
+def test_crisis_cantonese_variants():
+    """廣東話變體"""
+    assert detect_crisis("死咗就好")
+    assert detect_crisis("死咗就算")
+    assert detect_crisis("死咗無人知")
+    assert detect_crisis("不如死咗")
+    assert detect_crisis("唔存在咗")
+    assert detect_crisis("消失咗就好")
+    assert detect_crisis("唔喺度就好")
+
+def test_crisis_methods_extended():
+    """具體方法變體"""
+    assert detect_crisis("食藥自殺")
+    assert detect_crisis("割脈")
+
+def test_casual_slang_still_not_crisis():
+    """口頭禪仍然唔觸發"""
+    assert not detect_crisis("好攰呀想死")
+    assert not detect_crisis("熱到想死")
+    assert not detect_crisis("忙到想死")
+    assert not detect_crisis("煩到想死")
+
 
 # ---- check_output_safety (output) ----
 
