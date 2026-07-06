@@ -3,7 +3,7 @@
 指月 — 善知識 Telegram Bot
 
 一個用佛學智慧同心理學方法陪伴人嘅 AI 對話 bot。
-Project: ~/NS/projects/buddha-ai/bot/
+Project: buddha-ai/bot/（repo 根目錄下）
 
 Usage:
     cp .env.example .env  # 填入 BOT_TOKEN

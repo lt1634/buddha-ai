@@ -212,8 +212,23 @@
 5. **dry-run 通過**：21 cases 結構 OK
 
 ### 下一步
-1. 跑新 case live eval
-2. 招募真人測試員
+1. 招募真人測試員（`docs/user-testing-plan.md`）
+2. Month 2 final eval + prompt v1.0 凍結
+
+---
+
+## 2026-07-06：專案搬遷至 Google Drive
+
+### 新路徑
+`~/Library/CloudStorage/GoogleDrive-bfhywt@bfhmc.edu.hk/My Drive/Documents/buddha-ai`
+
+### 改動
+- `scripts/export_carousel_png.py`：PROJECT 改為相對路徑（唔再 hardcode 舊路徑）
+- `bot/bot.py`：更新 docstring
+
+### 注意
+- Google Drive 同步可能延遲 `.env` / `eval/reports/` — 確認 gitignore 仍生效
+- 舊路徑 `~/NS/projects/buddha-ai` 已棄用
 
 ---
 

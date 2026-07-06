@@ -16,7 +16,7 @@ import tempfile
 from pathlib import Path
 
 # --- Defaults ---
-PROJECT = Path("/Users/newmac/NS/projects/buddha-ai")
+PROJECT = Path(__file__).resolve().parent.parent
 DEFAULT_HTML = PROJECT / "carousel.html"
 DEFAULT_OUT = PROJECT / "carousel-png"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
