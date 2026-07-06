@@ -44,8 +44,8 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN", "")
 LLM_API_KEY = os.getenv("LLM_API_KEY", "")
-LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://integrate.api.nvidia.com/v1")
-LLM_MODEL = os.getenv("LLM_MODEL", "meta/llama-4-maverick-17b-128e-instruct")
+LLM_BASE_URL = os.getenv("LLM_BASE_URL", "https://opencode.ai/zen/go/v1")
+LLM_MODEL = os.getenv("LLM_MODEL", "mimo-v2.5")
 LLM_MAX_TOKENS = int(os.getenv("LLM_MAX_TOKENS", "4000"))
 
 SYSTEM_PROMPT_PATH = Path(__file__).parent.parent / "prompts" / "system-prompt.md"
@@ -54,11 +54,12 @@ CRISIS_ROUNDS_LIMIT = 3  # 危機對話最多 3 輪，之後彈熱線 + 結束
 
 # 可用 models
 AVAILABLE_MODELS = {
+    "mimo": "mimo-v2.5",
+    "glm": "glm-5.2",
     "maverick": "meta/llama-4-maverick-17b-128e-instruct",
     "qwen": "qwen/qwen3.5-397b-a17b",
-    "glm": "z-ai/glm-5.2",
 }
-DEFAULT_MODEL_KEY = "maverick"
+DEFAULT_MODEL_KEY = "mimo"
 
 # ---- LLM Client ----
 llm_client = AsyncOpenAI(

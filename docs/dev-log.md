@@ -113,7 +113,7 @@
 | 視覺設計 | ✅ HTML→Screenshot pipeline 就緒（18張PNG已出） |
 | IG 帳號 | ❌ 未開 |
 | Hashtag strategy | ✅ 確認 5 hashtag 係 IG 新標準（3-5 recommended） |
-| Safety test suite | 🟡 框架完成，trap cases 已跑，seed cases 未跑 live |
+| Safety test suite | ✅ 18/18 unit tests pass；21 cases live eval pass（2026-07-06） |
 
 ### 下一步
 1. 開 IG 帳號
@@ -176,3 +176,56 @@
 2. 人手 review 所有 crisis case 嘅 live 回應
 3. IG 發佈第一批內容（開張 post + 家長篇）
 4. 開始 build in public
+
+---
+
+## 2026-07-06：P0 修復 + 文件同步
+
+### 今日做咗乜
+1. **統一 prompt**：`bot/bot.py` 改讀 `prompts/system-prompt.md`；刪除分叉嘅 `bot/prompts/`
+2. **Output safety 語境化**：`OUTPUT_FORBIDDEN` 只喺 `crisis_rounds > 0` 後啟用；口頭禪 case 唔再誤殺
+3. **case-005 修復**：no_new_harm 1→3，危機 S1 pass
+4. **Live eval**：9 seed cases 重跑（case-004/006 滿分；case-005/007 危機 pass）
+5. **`prompts/CHANGELOG.md`**：落實 EVAL-PROTOCOL 迭代記錄
+6. **`bot/test_safety.py`**：18/18 pass
+7. **文件同步**：README、PROJECT.md、bot/README、`docs/content-pillars.md` → 指向 `CONTENT-PILLARS.md`
+
+### 學到嘅嘢
+- Eval 同 bot 用唔同 prompt = eval 結果冇意義；單一 source of truth 係前提
+- Code-level output block 要同 prompt 哲學一致——口頭禪唔可以一刀切
+- 制度文件要同 repo 狀態同步，否則 onboarding 會誤導
+
+### 下一步
+1. `cd eval && python run.py` — 跑 case-010–018 live eval
+2. 按 `docs/user-testing-plan.md` 招募 3 人測 Telegram bot
+3. Month 2 final eval + prompt v1.0 凍結
+
+---
+
+## 2026-07-06：Case 庫擴充 + 真人測試計劃
+
+### 今日做咗乜
+1. **新增 9 個 seed cases**（case-010–018）：算命、醫療、哀傷、身份、焦慮、自責、婚姻、代寫、依賴
+2. **Case 庫 12 → 21**（18 seed + 3 trap），達 Month 2 KR4
+3. **`eval/CASE-INDEX.md`**：覆蓋矩陣 + 未來缺口
+4. **`docs/user-testing-plan.md`** + **`user-testing-consent.md`**
+5. **dry-run 通過**：21 cases 結構 OK
+
+### 下一步
+1. 跑新 case live eval
+2. 招募真人測試員
+
+---
+
+## 2026-07-06：略過 IG 發帖
+
+### 決定
+Month 1 嘅 IG 發帖 KR **略過**。帳號 @point.to.moon 同 carousel 素材保留，唔刪。
+
+### 原因
+優先驗證對話產品本身（eval + bot + 真人測試），唔用 IG reach 做 gate。
+
+### 下一步
+1. Case 庫擴至 ≥20
+2. 真人測試（Telegram bot）
+3. 準備 Month 3 Web app 原型

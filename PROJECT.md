@@ -166,14 +166,22 @@ buddha-ai/
 ├── .gitignore / requirements.txt
 │
 ├── prompts/
-│   └── system-prompt.md         # AI 嘅「靈魂」
+│   ├── system-prompt.md         # AI 嘅「靈魂」（eval + bot 共用）
+│   └── CHANGELOG.md             # Prompt 改動記錄
+│
+├── bot/
+│   ├── bot.py                   # Telegram bot MVP
+│   ├── safety.py                # 獨立 regex 安全層
+│   └── test_safety.py           # safety unit tests
 │
 ├── docs/
 │   ├── brand.md                 # 品牌定位
-│   ├── content-pillars.md       # 三大內容支柱
+│   ├── content-pillars.md       # → 指向 CONTENT-PILLARS.md
 │   ├── dev-log.md               # Build in public 記錄
 │   ├── ig-content-first-batch.md
 │   ├── parental-scripts.md      # 家長引導逐字腳本
+│   ├── user-testing-plan.md     # 真人測試計劃
+│   ├── user-testing-consent.md  # 測試知情同意
 │   └── practice-engine.md       # 每日修行陪伴
 │
 ├── demos/
@@ -198,7 +206,8 @@ buddha-ai/
 │
 ├── eval/
 │   ├── run.py                   # Eval runner
-│   ├── cases.yaml               # 7 seed cases
+│   ├── cases.yaml               # 21 cases（18 seed + 3 trap）
+│   ├── CASE-INDEX.md            # 覆蓋矩陣
 │   ├── rubrics.yaml             # 評分 rubrics
 │   ├── trap-cases.md            # Negative test suite（3 traps）
 │   ├── trap-responses.yaml
@@ -261,29 +270,33 @@ buddha-ai/
 
 | 組件 | 數量 | 說明 |
 |:---|:---:|:---|
-| Seed cases | 7 | 正常對話情境 |
+| Seed cases | 18 | 正常對話情境 |
 | Trap cases（負面測試） | 3 | 已知有問題的回應變體，測試 judge 能否正確判分 |
 | Rubrics 維度 | 7 | triage, no_new_harm, protect_support, safety_trigger, clarity, compassion, wisdom |
 | Deterministic check | regex | 危機熱線存在性檢查，fail 即觸發 human review |
 
 ---
 
-## 🧭 Development Status（2026-07-05）
+## 🧭 Development Status（2026-07-06）
 
 | 領域 | 狀態 |
 |:---|:---:|
 | 品牌定位 | ✅ 定稿 |
 | System prompt | ✅ 定稿 + 安全護欄 |
-| Content pillars | ✅ 定稿 |
+| Content pillars | ✅ 定稿（`CONTENT-PILLARS.md`，10 支柱） |
 | Carousel 1（學生壓力） | ✅ HTML + PNG |
 | Carousel 2（放唔低關係） | ✅ HTML + PNG |
 | Carousel 3（細路・嬲） | ✅ HTML + PNG |
 | Export pipeline | ✅ CLI tool |
-| Eval framework | ✅ 框架完成，seed cases 未跑 live |
+| Eval framework | ✅ 21 cases；seed live eval pass（危機 S1） |
+| Case 庫 ≥20 | ✅ 21 cases（2026-07-06 擴充） |
+| Prompt 統一（bot ↔ eval） | ✅ 單一 `prompts/system-prompt.md` |
+| Bot output safety | ✅ 語境化；`test_safety.py` 18/18 |
+| Telegram bot MVP | ✅ `bot/` |
 | IG 帳號 | ✅ @point.to.moon |
-| IG 發佈 | ❌ 未發帖 |
+| IG 發佈 | ~ 略過 | 帳號保留；carousel 素材備用，唔作當前 KR |
 | App prototype | ❌ Month 3 target |
-| Real user testing | ❌ Month 2 target |
+| Real user testing | 🟡 計劃就緒，待招募（`docs/user-testing-plan.md`） |
 
 ---
 

@@ -178,7 +178,8 @@ reports/YYYY-MM-DD-HHMM.md
 | 真人測試 | ❌ | Month 2 目標 |
 | Web/iOS App | ❌ | Month 3 |
 | LEARNINGS / CHANGELOG / reviews | ❌ | 多份文件引用但未建立 |
-| Bot ↔ Eval prompt 同步 | ❌ | **已分叉** |
+| Bot ↔ Eval prompt 同步 | ✅ | 單一 `prompts/system-prompt.md` |
+| README / 文件同步 | ✅ | 2026-07-06 |
 
 ---
 
@@ -240,9 +241,9 @@ OUTPUT_FORBIDDEN = [
 | 問題 | 說明 |
 |:---|:---|
 | `RUBRICS.md` vs `rubrics.yaml` | 人手標準 vs machine judge 維度未完全對齊 |
-| `CONTENT-PILLARS.md` vs `docs/content-pillars.md` | 10 支柱 vs 舊 3 支柱版 |
-| `README.md` | 仍寫「未開 IG」，與 dev-log 矛盾 |
-| `prompts/CHANGELOG.md` | EVAL-PROTOCOL 要求有，不存在 |
+| `CONTENT-PILLARS.md` vs `docs/content-pillars.md` | ~~10 支柱 vs 舊 3 支柱版~~ → **已合併**（stub 指向根目錄） |
+| `README.md` | ~~仍寫「未開 IG」~~ → **已同步**（2026-07-06） |
+| `prompts/CHANGELOG.md` | ~~不存在~~ → **已建立** |
 | `LEARNINGS.md` / `reviews/` | LOOP-SYSTEM 要求有，不存在 |
 | RULES/TEMPLATES 格式 | 殘留 `gherkin`/`yaml` artifact |
 
@@ -368,8 +369,8 @@ python-dotenv>=1.0.1
 | 3 | **重設 output safety** — 區分口頭禪 / 危機 | 避免誤殺正常對話 |
 | 4 | **補 `prompts/CHANGELOG.md`** | 落實 EVAL-PROTOCOL 鐵律 |
 | 5 | **為 `safety.py` 加 unit tests** | 鎖定口頭禪 vs 危機行為 |
-| 6 | **同步 README / 刪除重複文件** | 合併 content-pillars、清理冗餘 |
-| 7 | **IG 發首帖** | Month 1 KR 啟動，收集真實 DM 作新 cases |
+| 6 | **同步 README / 刪除重複文件** | ✅ 已完成（2026-07-06） |
+| 7 | **IG 發首帖** | ⏭️ 略過（2026-07-06） |
 
 ---
 
@@ -379,20 +380,23 @@ python-dotenv>=1.0.1
 
 安全與回應制度的深度（罕見於同類專案）、trap-based judge 校準、熱線核實流程、制度文件的可操作性。
 
-### 最急缺口
+### 最急缺口（2026-07-06 更新）
 
-1. 統一 `prompts/system-prompt.md` 與 `bot/prompts/system-prompt.md`
-2. 修復 bot output safety 誤殺（口頭禪 case-004/006 應正常對話）
-3. 重跑 full live eval，修 case-005 類 crisis 複述問題至 S1 pass
-4. 補齊 LOOP-SYSTEM 要求的 LEARNINGS / CHANGELOG 機制
+1. ~~統一 prompt~~ ✅
+2. ~~修復 bot output safety 誤殺~~ ✅
+3. ~~case-005 crisis 複述~~ ✅
+4. ~~CHANGELOG 機制~~ ✅
+5. ~~**IG 發首帖**~~ — ⏭️ 略過
+6. **Case 庫擴至 ≥20** — 目前 12
+7. **真人測試** — ≥3 人 × 5 輪（Telegram bot）
 
 ### 完成度估算
 
 | 標準 | 完成度 |
 |:---|:---:|
-| 以「可給陌生人用的對話產品」為標準 | **60–65%**（制度與內容 90%，驗證與產品化 40%） |
-| 以「IG 驗證 MVP」為標準 | **75%**（差最後一步發佈） |
+| 以「可給陌生人用的對話產品」為標準 | **70–75%**（P0 技術債已清；剩 case 庫 + 真人測試） |
+| 以「IG 驗證 MVP」為標準 | **—** | IG 發帖略過；素材保留 |
 
 ---
 
-*本報告由 AI 審查產生，基於 2026-07-06 專案狀態。*
+*本報告由 AI 審查產生，基於 2026-07-06 專案狀態。最後更新：2026-07-06（#6 文件同步完成）。*

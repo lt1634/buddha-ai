@@ -50,8 +50,8 @@ PROMPT_PATH = PROJECT_DIR / "prompts" / "system-prompt.md"
 REPORTS_DIR = EVAL_DIR / "reports"
 RESPONSES_DIR = EVAL_DIR / "responses"
 
-DEFAULT_MODEL = "glm-5.2"
-DEFAULT_JUDGE_MODEL = "mimo-v2.5-pro"
+DEFAULT_MODEL = "mimo-v2.5"
+DEFAULT_JUDGE_MODEL = "mimo-v2.5"
 
 
 def load_env():
