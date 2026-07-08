@@ -38,3 +38,7 @@ eval/intake/
 
 # Bot logs
 bot/bot.log
+bot/logs/
+
+# Pytest
+.pytest_cache/

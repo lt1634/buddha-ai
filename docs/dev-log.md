@@ -217,13 +217,13 @@
 
 ---
 
-## 2026-07-06：專案搬遷至 Google Drive
+## 2026-07-06：專案搬遷至雲端同步目錄
 
 ### 新路徑
-`~/Library/CloudStorage/GoogleDrive-bfhywt@bfhmc.edu.hk/My Drive/Documents/buddha-ai`
+本機 clone / 雲端同步資料夾（路徑因環境而異，repo 內腳本一律用相對路徑）
 
 ### 改動
-- `scripts/export_carousel_png.py`：PROJECT 改為相對路徑（唔再 hardcode 舊路徑）
+- `scripts/export_carousel_png.py`：PROJECT 改為相對路徑（唔再 hardcode 本機絕對路徑）
 - `bot/bot.py`：更新 docstring
 
 ### 注意

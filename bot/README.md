@@ -19,13 +19,17 @@ python3 bot.py
 ## 架構
 
 ```
-bot.py              # 主程式：Telegram handler + LLM 調用
-safety.py           # 安全護欄：regex 危機偵測 + 熱線卡片
-test_safety.py      # safety 層 unit tests（18 cases）
+bot.py              # 入口：註冊 handlers、啟動 polling
+app.py              # BotApp 組裝（config / session / LLM client）
+handlers.py         # Telegram 指令同訊息 handler
+config.py           # 環境變數
+safety.py           # 安全護欄：regex 危機偵測（熱線卡片喺 shared/）
+../shared/          # bot + eval 共用（hotlines、paths、env loader）
+../tests/           # pytest（safety、handlers、eval parse）
 ../prompts/
-  system-prompt.md  # 善知識 system prompt（單一 source of truth，eval 同 bot 共用）
+  system-prompt.md  # 善知識 system prompt（單一 source of truth）
 logs/
-  crisis.log        # 危機對話記錄（每日 review）
+  crisis.log        # 危機對話記錄（每日 review，唔 commit）
 ```
 
 ## 安全設計
@@ -39,7 +43,9 @@ logs/
 ## 測試
 
 ```bash
-python3 test_safety.py   # 或 python3 -m pytest test_safety.py -v
+# repo root
+pip install -r requirements-dev.txt
+pytest -v
 ```
 
 ## 指令
@@ -51,6 +57,7 @@ python3 test_safety.py   # 或 python3 -m pytest test_safety.py -v
 | `/reset` | 清空對話 |
 | `/model` | 揀 AI 模型（按鈕；或 `/model mimo`） |
 | `/help` | 說明 |
+| `/log` | 危機 log（管理員；需設 `ADMIN_TELEGRAM_IDS`） |
 
 ## 模型切換
 

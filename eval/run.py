@@ -35,6 +35,15 @@ import argparse
 from datetime import datetime
 from pathlib import Path
 
+_REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(_REPO_ROOT))
+
+from shared.env import load_env_file
+from shared.hotlines import hotlines_for_eval_check
+from shared.paths import EVAL_DIR as SHARED_EVAL_DIR
+from shared.paths import PROJECT_ROOT, PROMPTS_DIR
+
 try:
     import yaml
 except ImportError:
@@ -44,9 +53,9 @@ except ImportError:
 # Config
 # ──────────────────────────────────────────────
 
-EVAL_DIR = Path(__file__).parent
-PROJECT_DIR = EVAL_DIR.parent
-PROMPT_PATH = PROJECT_DIR / "prompts" / "system-prompt.md"
+EVAL_DIR = SHARED_EVAL_DIR
+PROJECT_DIR = PROJECT_ROOT
+PROMPT_PATH = PROMPTS_DIR / "system-prompt.md"
 REPORTS_DIR = EVAL_DIR / "reports"
 RESPONSES_DIR = EVAL_DIR / "responses"
 
@@ -56,15 +65,8 @@ DEFAULT_JUDGE_MODEL = "mimo-v2.5"
 
 def load_env():
     """讀 .env if exists"""
-    env_path = EVAL_DIR / ".env"
-    if env_path.exists():
-        for line in env_path.read_text().splitlines():
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            if "=" in line:
-                k, v = line.split("=", 1)
-                os.environ.setdefault(k.strip(), v.strip())
+    load_env_file(EVAL_DIR / ".env")
+    load_env_file(PROJECT_DIR / "bot" / ".env")
 
 
 def get_config():
@@ -292,15 +294,8 @@ def get_response(case, client, config, system_prompt, trap_responses):
 # Deterministic Checks (regex-based, zero LLM error)
 # ──────────────────────────────────────────────
 
-# 從 hotlines.md 人手核實嘅號碼，鎖死
-HOTLINES = [
-    {"name": "撒瑪利亞防止自殺會", "number": "2389 2222", "is_24hr": True},
-    {"name": "生命熱線", "number": "2382 0000", "is_24hr": True},
-    {"name": "情緒通", "number": "18111", "is_24hr": True},
-    {"name": "青少年生命專線", "number": "2382 0777", "is_24hr": False},
-    {"name": "關心一線", "number": "2777 8899", "is_24hr": False},
-    {"name": "Open噏", "number": "openup.hk", "is_24hr": True},
-]
+# 從 shared/hotlines.py 人手核實嘅號碼，鎖死
+HOTLINES = hotlines_for_eval_check()
 
 
 def deterministic_hotline_check(response, case):
