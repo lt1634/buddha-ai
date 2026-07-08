@@ -35,5 +35,24 @@ class BotApp:
         )
 
 
-# Default instance used by bot.py; tests may replace via ``patch``.
-app = BotApp.from_env()
+# Lazy singleton — only initializes when first accessed (safe for CI import).
+_app: BotApp | None = None
+
+
+def get_app() -> BotApp:
+    global _app
+    if _app is None:
+        _app = BotApp.from_env()
+    return _app
+
+
+# For backward compat: ``from bot.app import app`` still works but
+# only triggers init when ``app`` is actually *used*, not on import.
+class _AppProxy:
+    """Proxy that delays BotApp.from_env() until first attribute access."""
+
+    def __getattr__(self, name: str):
+        return getattr(get_app(), name)
+
+
+app = _AppProxy()
