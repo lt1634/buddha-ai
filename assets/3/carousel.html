@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>橙好甜</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Noto Serif TC", "Songti SC", Georgia, serif;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 30px 20px; overflow-x: hidden;
+  }
+  .carousel-wrapper { position: relative; width: 100%; max-width: 440px; }
+  .carousel-container {
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding: 15px 10px 30px 10px;
+  }
+  .carousel-container::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; width: 100%; height: 520px;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e; border-radius: 24px; position: relative; overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
+    scroll-snap-align: center; display: flex; flex-direction: column;
+    justify-content: center; padding: 50px 40px;
+    line-height: 2; font-size: 17px;
+  }
+  .slide p { margin-bottom: 14px; text-indent: 0; }
+  .controls-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #8c6f5c44; transition: all 0.3s ease; cursor: pointer; }
+  .dot.active { background: #d4a373; transform: scale(1.3); box-shadow: 0 0 8px #d4a37388; }
+</style>
+</head>
+<body>
+<div class="carousel-wrapper">
+  <div class="carousel-container" id="carousel">
+
+    <div class="slide slide-1" data-index="0">
+      <p>我今年80歲。</p>
+      <p>今日天氣幾好，我坐喺公園長椅度睇小朋友放風箏。Audrey 嚟嗰陣，我已經飲咗半杯凍咖啡，杯身啲水珠滴到條褲，濕咗一橛。</p>
+      <p>「老豆，你又唔帶帽。」</p>
+      <p>「帶咗帽睇唔到個天。」</p>
+      <p>佢喺我隔籬坐低，手攞住一袋橙。46歲嘅女人，眉眼之間有佢阿媽年輕嗰時嘅樣，不過輪廓係我嘅——厚唇、濃眉毛，笑起上嚟嘴角嗰個弧度同我一模一樣，呢樣嘢我冇話佢知。</p>
+    </div>
+
+    <div class="slide slide-2" data-index="1">
+      <p>佢剝咗個橙遞過嚟，我接住，啲汁沿住手指罅流落嚟。</p>
+      <p>「你記唔記得你細個嗰陣，我哋喺沙灘睇日落？」</p>
+      <p>「記得。你話人類好渺小。」</p>
+      <p>「你話我傻。」</p>
+      <p>「你而家都仲係。不過老咗，傻得溫柔咗。」</p>
+      <p>佢笑住講。我冇回嘴。</p>
+      <p>遠處有個小朋友跌親，喊咗一聲，自己爬返起繼續跑。Audrey 睇咗幾秒，話：</p>
+      <p>「我以前都係咁。跌低唔喊，睇吓你有冇望住我先。」</p>
+    </div>
+
+    <div class="slide slide-3" data-index="2">
+      <p>「記得。我4歲嗰陣喺商場地下大喊大尖叫，你同阿媽講道理冇用，最後你蹲低到同我一樣高，靜靜坐喺我隔籬。」</p>
+      <p>「我以為你唔記得。」</p>
+      <p>「細個啲嘢好多都記得。只係大個咗以為自己唔記得咋。」</p>
+      <p>剝完橙，佢喺牛仔褲度抹抹手，然後喺袋度攞另一個出嚟，呢次冇遞俾我，自己食。</p>
+      <p>我望住佢食橙個樣，忽然覺得呢個畫面好似喺邊度見過。過咗幾秒，諗起佢4歲嗰年，喺廚房食橙，食到成手都係汁，抬頭望住我：</p>
+      <p>「爹哋，橙好甜。」</p>
+    </div>
+
+    <div class="slide slide-4" data-index="3">
+      <p>嗰時我38歲，啱啱拒絕咗升職，坐喺廚房張凳度睇佢食橙，心入面諗：值得嘅。</p>
+      <p>42年後嘅今日，佢46歲，我80歲，我哋坐喺公園度食橙，中間咩都冇發生。</p>
+      <p>但咩都發生咗。</p>
+      <p>「老豆，你有冇後悔過？」</p>
+      <p>「後悔咩？」</p>
+      <p>「有得升職唔升。」</p>
+      <p>我搖搖頭。「你嗰陣4歲，仲喺商場地下大喊大尖叫。我點解要為咗一個 title 放棄蹲低陪你喊嘅機會？」</p>
+    </div>
+
+    <div class="slide slide-5" data-index="4">
+      <p>佢冇出聲，繼續低頭食橙。過咗一陣，佢話：</p>
+      <p>「其實我記得商場嗰次。」</p>
+      <p>「你頭先已經講過嘞。」</p>
+      <p>「唔係，我想講嘅係——你蹲低嗰下，我已經唔喊了。唔係因為你講咗啲咩，係因為你喺度。」</p>
+      <p>我冇回應，因為喉嚨有少少緊。</p>
+      <p>有個小朋友跑過嚟執波，差啲撞到我隻腳。Audrey 扶住椅背企起身，拍拍個小朋友個頭。</p>
+      <p>「小心啊。」</p>
+    </div>
+
+    <div class="slide slide-6" data-index="5">
+      <p>「老豆，你怕唔怕死？」</p>
+      <p>「以前怕。」</p>
+      <p>「而家呢？」</p>
+      <p>我諗咗一諗。「而家最驚嘅係——死之前仲未嚟得切話你知，你細個喺商場喊嗰次，我好驚。」</p>
+      <p>「驚咩？」</p>
+      <p>「驚自己做得唔夠好。」</p>
+      <p>「你已經做得好好。」</p>
+      <p>「你點知？」</p>
+      <p>「因為我而家都係咁對我個女。」</p>
+    </div>
+
+  </div>
+</div>
+<div class="controls-container">
+  <div class="nav-dots" id="dots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+    <div class="dot" data-index="5"></div>
+  </div>
+</div>
+<script>
+  const c = document.getElementById('carousel');
+  const d = document.querySelectorAll('.dot');
+  c.addEventListener('scroll', () => {
+    const i = Math.round(c.scrollLeft / c.offsetWidth);
+    d.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+  });
+  d.forEach(dot => dot.addEventListener('click', e => {
+    c.scrollTo({ left: parseInt(e.target.dataset.index) * c.offsetWidth, behavior: 'smooth' });
+  }));
+</script>
+</body>
+</html>
