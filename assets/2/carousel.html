@@ -3,709 +3,150 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>指月 Carousel 2 — 應唔應該同人深交</title>
+<title>指月 Carousel 3 — 橙好甜</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;500;600;700&family=Noto+Sans+TC:wght@300;400;500&display=swap');
-
-  * { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-
-  :root {
-    --color-bg-dark: #121212;
-    --color-paper: #f7f4ed;
-    --color-ink: #221c15;
-    --color-gold: #bca882;
-    --color-gold-light: rgba(188, 168, 130, 0.15);
-    --color-gold-glow: rgba(243, 215, 161, 0.3);
-    --font-serif: 'Noto Serif TC', serif;
-    --font-sans: 'Noto Sans TC', sans-serif;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    background-color: var(--color-bg-dark);
-    color: #e5dec9;
-    font-family: var(--font-sans);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 30px 20px;
-    overflow-x: hidden;
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 30px 20px; overflow-x: hidden;
   }
 
-  header {
-    text-align: center;
-    margin-bottom: 30px;
-    z-index: 10;
-  }
-
-  h1 {
-    font-family: var(--font-serif);
-    color: var(--color-paper);
-    font-size: 26px;
-    font-weight: 300;
-    letter-spacing: 4px;
-    margin-bottom: 8px;
-  }
-
-  .subtitle {
-    color: #8c8270;
-    font-size: 14px;
-    font-weight: 300;
-    letter-spacing: 1px;
-  }
-
-  .carousel-wrapper {
-    position: relative;
-    width: 100%;
-    max-width: 440px;
-    margin: 0 auto;
-  }
-
+  .carousel-wrapper { position: relative; width: 100%; max-width: 440px; margin: 0 auto; }
   .carousel-container {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
     padding: 15px 10px 30px 10px;
-    perspective: 1000px;
   }
-
-  .carousel-container::-webkit-scrollbar {
-    display: none;
-  }
+  .carousel-container::-webkit-scrollbar { display: none; }
 
   .slide {
-    flex: 0 0 100%;
-    width: 100%;
-    height: 520px;
-    background-color: var(--color-paper);
-    color: var(--color-ink);
-    border-radius: 24px;
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 
-                0 5px 15px rgba(0, 0, 0, 0.2);
-    scroll-snap-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 48px 36px;
-    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+    flex: 0 0 100%; width: 100%; height: 520px;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e;
+    border-radius: 24px; position: relative; overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
+    scroll-snap-align: center; display: flex; flex-direction: column;
+    justify-content: space-between; padding: 48px 36px;
+    line-height: 1.85; font-size: 18px;
   }
 
-  .slide::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.25;
-    background-image: 
-      radial-gradient(circle at 10% 10%, var(--color-gold) 0%, transparent 60%),
-      radial-gradient(circle at 90% 90%, #8b7355 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 1;
-  }
+  .slide-header { font-size: 11px; letter-spacing: 2px; color: #8c6f5c; font-weight: 400; }
+  .slide-content { display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+  .slide-footer { font-size: 11px; color: #8c6f5c; letter-spacing: 1px; text-align: center; padding-top: 16px; border-top: 1px solid rgba(140,111,92,0.15); }
 
-  .slide::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 2;
+  .slide-content p { margin-bottom: 16px; }
+  .highlight {
+    background: #fff8e1; padding: 25px; border-radius: 18px;
+    border-left: 6px solid #d4a373; margin: 25px 0;
   }
+  .main-title {
+    text-align: center; color: #5c4033; font-size: 32px;
+    font-weight: 700; margin-bottom: 20px; line-height: 1.5;
+  }
+  .subtitle-text { text-align: center; color: #8c6f5c; font-size: 15px; margin-top: 20px; }
+  .ending { text-align: center; font-size: 22px; color: #5c4033; margin-top: 40px; font-weight: 600; }
 
-  .slide-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 3;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: #8c7e65;
-    font-weight: 400;
-  }
-
-  .slide-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 1;
-    z-index: 3;
-    padding: 20px 0;
-  }
-
-  /* ===== Slide 1: 封面 ===== */
-  .slide-1 {
-    background: radial-gradient(circle at center, #faf8f5 0%, #ebe2d3 100%);
-  }
-
-  .slide-1 .main-title {
-    font-family: var(--font-serif);
-    font-size: 30px;
-    font-weight: 600;
-    color: var(--color-ink);
-    line-height: 1.6;
-    letter-spacing: 1px;
-    text-align: center;
-    margin-bottom: 24px;
-  }
-
-  .ink-divider {
-    width: 60px;
-    height: 4px;
-    background: var(--color-gold);
-    border-radius: 50% 10% 50% 10%;
-    margin-bottom: 24px;
-  }
-
-  .slide-1 .subtitle-text {
-    font-size: 15px;
-    color: #5c5245;
-    line-height: 1.8;
-    font-weight: 300;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
-  /* ===== Slide 2: 四攝法 ===== */
-  .slide-2 .zen-symbol {
-    position: relative;
-    width: 90px;
-    height: 90px;
-    margin-bottom: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .moon-glow {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background: radial-gradient(circle, #fcd997 0%, #e8c682 70%);
-    border-radius: 50%;
-    box-shadow: 0 0 30px var(--color-gold-glow);
-    animation: breathing 4s ease-in-out infinite;
-  }
-
-  .slide-2 .quote-text {
-    font-family: var(--font-serif);
-    font-size: 17px;
-    color: var(--color-ink);
-    line-height: 2;
-    font-weight: 400;
-    letter-spacing: 1px;
-    text-align: center;
-  }
-
-  .four-paramita {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px 20px;
-    margin-top: 16px;
-    margin-bottom: 16px;
-  }
-
-  .paramita-item {
-    font-family: var(--font-serif);
-    font-size: 13px;
-    color: var(--color-ink);
-    background: linear-gradient(120deg, rgba(232,198,130,0.25) 0%, rgba(232,198,130,0.08) 100%);
-    border-radius: 8px;
-    padding: 8px 12px;
-    text-align: center;
-    letter-spacing: 2px;
-    font-weight: 500;
-  }
-
-  /* ===== Slide 3: 觀照 ===== */
-  .slide-3 .zen-circle-container {
-    position: relative;
-    width: 100px;
-    height: 100px;
-    margin-bottom: 24px;
-  }
-
-  .enso-ring {
-    width: 100%;
-    height: 100%;
-    stroke: var(--color-gold);
-    stroke-width: 1.5;
-    fill: none;
-    stroke-dasharray: 280;
-    stroke-dashoffset: 20;
-    transform: rotate(-90deg);
-  }
-
-  .slide-3 .quote-text {
-    font-size: 16px;
-    color: #443c32;
-    line-height: 1.9;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  .slide-3 .highlight {
-    display: inline-block;
-    font-family: var(--font-serif);
-    font-weight: 600;
-    color: var(--color-ink);
-    padding: 2px 8px;
-    margin: 0 4px;
-    background: linear-gradient(120deg, rgba(232,198,130,0.3) 0%, rgba(232,198,130,0.1) 100%);
-    border-radius: 4px;
-  }
-
-  /* ===== Slide 4: 慈悲 vs 執著 ===== */
-  .slide-4 .concept-tag {
-    font-family: var(--font-serif);
-    font-size: 12px;
-    color: var(--color-gold);
-    border: 1px solid var(--color-gold);
-    padding: 4px 16px;
-    border-radius: 30px;
-    letter-spacing: 4px;
-    margin-bottom: 24px;
-  }
-
-  .comparison-block {
-    width: 100%;
-    margin-bottom: 16px;
-  }
-
-  .comparison-label {
-    font-family: var(--font-serif);
-    font-size: 14px;
-    font-weight: 600;
-    letter-spacing: 2px;
-    margin-bottom: 8px;
-  }
-
-  .comparison-label.compassion {
-    color: #6b8a5e;
-  }
-
-  .comparison-label.attachment {
-    color: #a67c5b;
-  }
-
-  .comparison-desc {
-    font-size: 14px;
-    color: #5c5245;
-    line-height: 1.8;
-    font-weight: 300;
-  }
-
-  .comparison-divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent 0%, rgba(139,115,85,0.15) 50%, transparent 100%);
-    margin: 12px 0;
-  }
-
-  /* ===== Slide 5: 行動 ===== */
-  .slide-5 {
-    background: linear-gradient(135deg, #241e17 0%, #15110d 100%);
-    color: var(--color-paper);
-  }
-
-  .slide-5::before {
-    opacity: 0.15;
-    background-image: radial-gradient(circle at 80% 20%, var(--color-gold) 0%, transparent 60%);
-  }
-
-  .slide-5 .action-tag {
-    font-size: 11px;
-    color: var(--color-gold);
-    letter-spacing: 4px;
-    margin-bottom: 24px;
-  }
-
-  .slide-5 .action-title {
-    font-size: 17px;
-    line-height: 2;
-    color: #dfd8cb;
-    font-weight: 300;
-    text-align: center;
-  }
-
-  .slide-5 .action-title strong {
-    color: #f7e2bd;
-    font-weight: 500;
-    font-family: var(--font-serif);
-    border-bottom: 1.5px dashed var(--color-gold);
-    padding-bottom: 2px;
-  }
-
-  .zen-circle-small {
-    width: 64px;
-    height: 64px;
-    border: 1px solid rgba(188, 168, 130, 0.3);
-    border-radius: 50%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-  }
-
-  .zen-circle-small::after {
-    content: '';
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    border: 1px dashed rgba(188, 168, 130, 0.15);
-    border-radius: 50%;
-    animation: rotate 20s linear infinite;
-  }
-
-  .zen-circle-small .center-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--color-gold);
-    border-radius: 50%;
-  }
-
-  /* ===== Slide 6: 收尾 ===== */
-  .slide-6 {
-    background: radial-gradient(circle at center, #faf8f5 0%, #ebe2d3 100%);
-  }
-
-  .brand-illustration {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .logo-sun-moon {
-    position: absolute;
-    top: 5px;
-    width: 55px;
-    height: 55px;
-    background: #e8c682;
-    border-radius: 50%;
-    box-shadow: 0 0 25px rgba(232, 198, 130, 0.4);
-  }
-
-  .logo-finger {
-    position: absolute;
-    bottom: 5px;
-    width: 60px;
-    height: auto;
-    opacity: 0.85;
-  }
-
-  .slide-6 .ending-text {
-    font-family: var(--font-serif);
-    font-size: 19px;
-    color: var(--color-ink);
-    line-height: 1.8;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-align: center;
-  }
-
-  .slide-6 .brand-footer {
-    margin-top: 16px;
-    font-family: var(--font-serif);
-    font-size: 14px;
-    letter-spacing: 6px;
-    color: var(--color-gold);
-    font-weight: 500;
-  }
-
-  /* ===== 底部 ===== */
-  .slide-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 3;
-    font-size: 11px;
-    color: #9c8e75;
-    letter-spacing: 1px;
-    border-top: 1px solid rgba(139, 115, 85, 0.08);
-    padding-top: 16px;
-    width: 100%;
-  }
-
-  .slide-footer span:last-child {
-    font-size: 20px;
-    font-weight: bold;
-    color: var(--color-gold);
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: inline-block;
-  }
-
-  .slide:hover .slide-footer span:last-child {
-    transform: translateX(6px) scale(1.15);
-  }
-
-  .slide-5 .slide-footer {
-    border-top-color: rgba(188, 168, 130, 0.1);
-    color: #8c806d;
-  }
-
-  .controls-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 15px;
-    margin-top: 20px;
-    z-index: 10;
-  }
-
-  .nav-dots {
-    display: flex;
-    gap: 8px;
-  }
-
-  .dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #444;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  .dot.active {
-    background: var(--color-gold);
-    transform: scale(1.3);
-    box-shadow: 0 0 8px var(--color-gold);
-  }
-
-  .nav-hint-text {
-    color: #6e6555;
-    font-size: 12px;
-    letter-spacing: 2px;
-    font-weight: 300;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .nav-hint-text svg {
-    width: 14px;
-    height: 14px;
-    fill: #6e6555;
-  }
-
-  @keyframes breathing {
-    0%, 100% { transform: scale(1); opacity: 0.9; box-shadow: 0 0 20px rgba(243, 215, 161, 0.3); }
-    50% { transform: scale(1.05); opacity: 1; box-shadow: 0 0 35px rgba(243, 215, 161, 0.5); }
-  }
-
-  @keyframes rotate {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
-  }
-
-  @media (max-width: 480px) {
-    body {
-      padding: 15px 10px;
-    }
-    .carousel-wrapper {
-      max-width: 100%;
-    }
-    .slide {
-      height: 480px;
-      padding: 36px 24px;
-    }
-    .slide-1 .main-title {
-      font-size: 26px;
-    }
-  }
+  /* Controls */
+  .controls-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #8c6f5c44; transition: all 0.3s ease; cursor: pointer; }
+  .dot.active { background: #d4a373; transform: scale(1.3); box-shadow: 0 0 8px #d4a37388; }
+  .nav-hint { color: #8c6f5c; font-size: 12px; letter-spacing: 2px; }
 </style>
 </head>
 <body>
 
-<header>
-  <h1>指月 · 觀心隨筆</h1>
-  <p class="subtitle">人際關係篇 — 「應唔應該同人深交？」</p>
-</header>
-
 <div class="carousel-wrapper">
   <div class="carousel-container" id="carousel">
 
-    <!-- Slide 1: 封面 -->
+    <!-- Slide 1 -->
     <div class="slide slide-1" data-index="0">
-      <div class="slide-header">
-        <span>01 / 06</span>
-      </div>
-      
+      <div class="slide-header">01 / 06</div>
       <div class="slide-content">
-        <div class="main-title">佛法點睇<br>「應唔應該同人深交？」</div>
-        <div class="ink-divider"></div>
-        <div class="subtitle-text">
-          唔係「要唔要親」，<br>而係「點樣親而唔痛苦」
+        <div class="main-title">我今年80歲。</div>
+        <p>今日天氣幾好，我坐喺公園長椅度睇小朋友放風箏。</p>
+        <p>Audrey 嚟嗰陣，我已經飲咗半杯凍咖啡，杯身啲水珠滴到條褲，濕咗一橛。</p>
+        <div class="highlight">
+          <p>Audrey：「老豆，你又唔帶帽。」</p>
+          <p>我：「帶咗帽睇唔到個天。」</p>
         </div>
       </div>
-
-      <div class="slide-footer">
-        <span>人際觀照</span>
-        <span>→</span>
-      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
     </div>
 
-    <!-- Slide 2: 四攝法 -->
+    <!-- Slide 2 -->
     <div class="slide slide-2" data-index="1">
-      <div class="slide-header">
-        <span>02 / 06</span>
-      </div>
-
+      <div class="slide-header">02 / 06</div>
       <div class="slide-content">
-        <div class="zen-symbol">
-          <div class="moon-glow"></div>
+        <p>佢剝咗個橙遞過嚟，我接住，啲汁沿住手指罅流落嚟。</p>
+        <p>我：「你記唔記得你細個嗰陣，我哋喺沙灘睇日落？」</p>
+        <div class="highlight">
+          <p>Audrey：「記得。你話人類好渺小。」</p>
+          <p>我：「你話我傻。」</p>
         </div>
-        <div class="quote-text">
-          佛經有個概念叫「四攝法」——
-        </div>
-        <div class="four-paramita">
-          <div class="paramita-item">布 施</div>
-          <div class="paramita-item">愛 語</div>
-          <div class="paramita-item">利 行</div>
-          <div class="paramita-item">同 事</div>
-        </div>
-        <div class="quote-text" style="font-size: 14px; color: #5c5245; font-weight: 300; margin-top: 8px;">
-          全部都係講點樣同人好好相處。<br>
-          佛陀自己都有僧團、有朋友、有弟子。<br>
-          佢唔係教人做孤島。
-        </div>
+        <p>佢笑住講：「你而家都仲係。不過老咗，傻得溫柔咗。」</p>
       </div>
-
-      <div class="slide-footer">
-        <span>佛法智慧</span>
-        <span>→</span>
-      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
     </div>
 
-    <!-- Slide 3: 觀照執著 -->
+    <!-- Slide 3 -->
     <div class="slide slide-3" data-index="2">
-      <div class="slide-header">
-        <span>03 / 06</span>
-      </div>
-
+      <div class="slide-header">03 / 06</div>
       <div class="slide-content">
-        <div class="zen-circle-container">
-          <svg viewBox="0 0 100 100" style="width:100%; height:100%;">
-            <path d="M 50,10 A 40,40 0 1,1 49.9,10" class="enso-ring" />
-          </svg>
-        </div>
-        <div class="quote-text">
-          佢同時問你一件事：<br><br>
-          你親近人嘅時候，<br>
-          心入面有冇<span class="highlight">執著</span>？<br><br>
-          同樣係同人食飯、傾偈、做好朋友——<br>
-          動機唔同，感受完全唔同。
+        <p>Audrey：「其實我記得商場嗰次。」</p>
+        <div class="highlight">
+          <p>我：「你頭先已經講過嘞。」</p>
+          <p>Audrey：「我想講嘅係——你蹲低嗰下，我已經唔喊了。唔係因為你講咗啲咩，係因為你喺度。」</p>
         </div>
       </div>
-
-      <div class="slide-footer">
-        <span>覺察心念</span>
-        <span>→</span>
-      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
     </div>
 
-    <!-- Slide 4: 慈悲 vs 執著 -->
+    <!-- Slide 4 -->
     <div class="slide slide-4" data-index="3">
-      <div class="slide-header">
-        <span>04 / 06</span>
-      </div>
-
+      <div class="slide-header">04 / 06</div>
       <div class="slide-content">
-        <div class="concept-tag">慈悲 vs 執著</div>
-        
-        <div class="comparison-block">
-          <div class="comparison-label compassion">✦ 慈悲</div>
-          <div class="comparison-desc">
-            你對人好，係因為你想對人好。<br>
-            對方回應唔到，你亦唔覺得被背叛。
-          </div>
+        <p>Audrey：「老豆，你有冇後悔過？」</p>
+        <div class="highlight">
+          <p>我：「後悔咩？」</p>
+          <p>Audrey：「有得升職唔升。」</p>
         </div>
-
-        <div class="comparison-divider"></div>
-
-        <div class="comparison-block">
-          <div class="comparison-label attachment">✦ 執著</div>
-          <div class="comparison-desc">
-            你對人好，係因為怕孤單、怕被排斥。<br>
-            對方少覆一個 message，<br>
-            你就成晚瞓唔著。
-          </div>
-        </div>
+        <p>我搖搖頭：「你嗰陣4歲，仲喺商場地下大喊大尖叫。我點解要為咗一個 title 放棄蹲低陪你喊嘅機會？」</p>
       </div>
-
-      <div class="slide-footer">
-        <span>內在動機</span>
-        <span>→</span>
-      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
     </div>
 
-    <!-- Slide 5: 行動 -->
+    <!-- Slide 5 -->
     <div class="slide slide-5" data-index="4">
-      <div class="slide-header">
-        <span>05 / 06</span>
-      </div>
-
+      <div class="slide-header">05 / 06</div>
       <div class="slide-content">
-        <div class="action-tag">可以親近</div>
-        <div class="action-title">
-          可以親近，但唔好<strong>執著結果</strong>。<br>
-          可以付出，但唔好用付出<strong>綁住對方</strong>。<br><br>
-          對方嘅反應係對方嘅因緣，<br>
-          唔係你能控制嘅。
+        <p>我冇再出聲。</p>
+        <p>因為有啲嘢唔需要答。</p>
+        <div class="highlight">
+          <p>就好似42年前嗰個廚房個廚房嘅下午，佢食住橙話「好甜」，我咩都冇講，淨係坐喺度。</p>
         </div>
-        <div class="zen-circle-small">
-          <div class="center-dot"></div>
-        </div>
+        <p>有啲時刻，沉默就係最完整嘅對話。</p>
       </div>
-
-      <div class="slide-footer">
-        <span>放下執著</span>
-        <span>→</span>
-      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
     </div>
 
-    <!-- Slide 6: 收尾 -->
+    <!-- Slide 6 -->
     <div class="slide slide-6" data-index="5">
-      <div class="slide-header">
-        <span>06 / 06</span>
-      </div>
-
+      <div class="slide-header">06 / 06</div>
       <div class="slide-content">
-        <div class="brand-illustration">
-          <div class="logo-sun-moon"></div>
-          <svg class="logo-finger" viewBox="0 0 100 120" style="fill:none; stroke:#221c15; stroke-width:3; stroke-linecap:round;">
-            <path d="M50,110 C46,90 42,70 48,52 C50,47 49,41 51,35 C52,32 50,22 51.5,15 C52,11 53.5,11 54,15 C55.5,25 54,35 55,45 C56,53 58,60 56,68 C54,75 62,72 65,77 C66.5,80 62,84 60,86 C58.5,87 59,92 58.5,95" />
-          </svg>
+        <p>我哋慢慢行去停車場。</p>
+        <p>冇講再見，因為佢等陣會車我返屋企。</p>
+        <div class="highlight">
+          <p>就好似佢從4歲到46歲，每一次都一樣。</p>
         </div>
-        <div class="ending-text">
-          最健康嘅關係唔係<br>「你一定要同我好」，<br>
-          而係「我對你嘅善意係真嘅，<br>
-          但佢唔會因為你嘅回應而變質。」<br><br>
-          唔係「要唔要深交」，<br>
-          而係「點樣深交而唔痛苦」。
-        </div>
-        <div class="brand-footer">指 月</div>
+        <div class="ending">—— 完 ——</div>
       </div>
-
-      <div class="slide-footer" style="justify-content: center;">
-        <span>看見月亮，忘記指尖。</span>
-      </div>
+      <div class="slide-footer">指月 · 橙好甜</div>
     </div>
 
   </div>
@@ -720,39 +161,21 @@
     <div class="dot" data-index="4"></div>
     <div class="dot" data-index="5"></div>
   </div>
-
-  <p class="nav-hint-text">
-    <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
-    左右滑動或點擊圓點預覽
-    <svg viewBox="0 0 24 24"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
-  </p>
+  <p class="nav-hint">左右滑動或點擊圓點預覽</p>
 </div>
 
 <script>
   const carousel = document.getElementById('carousel');
   const dots = document.querySelectorAll('.dot');
-
   carousel.addEventListener('scroll', () => {
     const width = carousel.offsetWidth;
     const activeIndex = Math.round(carousel.scrollLeft / width);
-    
-    dots.forEach((dot, index) => {
-      if (index === activeIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
-    });
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
   });
-
   dots.forEach(dot => {
     dot.addEventListener('click', (e) => {
-      const index = parseInt(e.target.dataset.index);
-      const width = carousel.offsetWidth;
-      carousel.scrollTo({
-        left: index * width,
-        behavior: 'smooth'
-      });
+      const i = parseInt(e.target.dataset.index);
+      carousel.scrollTo({ left: i * carousel.offsetWidth, behavior: 'smooth' });
     });
   });
 </script>
