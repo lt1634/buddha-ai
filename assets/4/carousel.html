@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 4 — 失望性情感隔離</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 30px 20px; overflow-x: hidden;
+  }
+  .carousel-wrapper { position: relative; width: 100%; max-width: 440px; }
+  .carousel-container {
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding: 15px 10px 30px 10px;
+  }
+  .carousel-container::-webkit-scrollbar { display: none; }
+  .slide {
+    flex: 0 0 100%; width: 100%; height: 520px;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e; border-radius: 24px; position: relative; overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
+    scroll-snap-align: center; display: flex; flex-direction: column;
+    justify-content: center; padding: 50px 40px;
+    line-height: 1.8; font-size: 20px;
+  }
+  .slide-header { position: absolute; top: 48px; left: 40px; font-size: 11px; letter-spacing: 2px; color: #8c6f5c; }
+  .slide-content { display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+  .slide p { margin-bottom: 14px; }
+  .highlight {
+    background: #fff8e1; padding: 22px; border-radius: 18px;
+    border-left: 6px solid #d4a373; margin: 20px 0;
+  }
+  .highlight p { margin-bottom: 10px; }
+  .highlight p:last-child { margin-bottom: 0; }
+  .main-title {
+    text-align: center; color: #5c4033; font-size: 28px;
+    font-weight: 700; margin-bottom: 20px; line-height: 1.6;
+  }
+  .subtitle-text { text-align: center; color: #8c6f5c; font-size: 15px; margin-top: 16px; }
+  .concept-tag {
+    text-align: center; font-size: 24px; font-weight: 700;
+    color: #5c4033; margin-bottom: 20px; letter-spacing: 2px;
+  }
+  .ending { text-align: center; font-size: 22px; color: #5c4033; margin-top: 30px; font-weight: 600; line-height: 1.7; }
+  .controls-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #8c6f5c44; transition: all 0.3s ease; cursor: pointer; }
+  .dot.active { background: #d4a373; transform: scale(1.3); box-shadow: 0 0 8px #d4a37388; }
+</style>
+</head>
+<body>
+<div class="carousel-wrapper">
+  <div class="carousel-container" id="carousel">
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1" data-index="0">
+      <div class="slide-header">01 / 06</div>
+      <div class="slide-content">
+        <div class="main-title">失望性情感隔離</div>
+        <p>小時候越獨立懂事的孩子，長大後的心理問題可能會越多。</p>
+        <p>遇到事情從來都是自己扛，習慣性地拒絕接受他人的幫助，不想麻煩別人，也不想別人麻煩自己。</p>
+        <div class="highlight">
+          <p>可以做到一個人獨自在外，長期不聯繫家人，更不會對父母有思念之情。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2" data-index="1">
+      <div class="slide-header">02 / 06</div>
+      <div class="slide-content">
+        <p>哪怕遇到委屈，也不願意和他們傾訴分享，甚至抗拒與他們親密互動，沒有話說。</p>
+        <p>有時會被別人認為太冷血。</p>
+        <div class="highlight">
+          <p>這些行為的背後，可能不是獨立，而是失望。</p>
+          <p>心理學中稱之為「失望性情感隔離」。</p>
+        </div>
+        <div class="subtitle-text">
+          唔係唔想親近，係親近過、期待過、<br>然後學識咗唔再期待。
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3" data-index="2">
+      <div class="slide-header">03 / 06</div>
+      <div class="slide-content">
+        <p>細個嗰陣，孩子本能咁樣走向父母，尋求安慰、尋求回應。</p>
+        <p>但如果每次伸出手，接住嘅係冷漠、忽略、或者「你咁大個人仲喊乜」，佢就會慢慢學到一個生存策略：</p>
+        <div class="highlight">
+          <p>「原來靠自己，比較安全。」</p>
+        </div>
+        <p>呢個唔係獨立，係一個小小嘅人，用盡佢唯一識嘅方法保護自己。</p>
+      </div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide slide-4" data-index="3">
+      <div class="slide-header">04 / 06</div>
+      <div class="slide-content">
+        <div class="concept-tag">觀照 · 第一層</div>
+        <p>對父母嘅距離感，其實係受過傷嘅心自然生出嘅保護殼。</p>
+        <div class="highlight">
+          <p>呢個殼幫你活到今日，佢唔係壞嘅、唔係冷血嘅。</p>
+          <p>所以如果而家有人話你「冷血」，你唔需要因此怪自己——</p>
+          <p>你只係曾經太痛，而冇人教你痛嘅時候可以點樣安放。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide slide-5" data-index="4">
+      <div class="slide-header">05 / 06</div>
+      <div class="slide-content">
+        <div class="concept-tag">觀照 · 第二層</div>
+        <p>如果有一日，你想試下，可以輕輕問自己一句——</p>
+        <div class="highlight">
+          <p>嗰個細個嘅自己，嗰陣真正想要嘅，係乜嘢？</p>
+        </div>
+        <p>唔係要你即刻原諒，唔係要你假裝親近。</p>
+        <p>只係同嗰個曾經好努力靠自己撐過嚟嘅自己講一句：</p>
+        <div class="highlight">
+          <p>「你嗰陣好辛苦，我知。」</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide slide-6" data-index="5">
+      <div class="slide-header">06 / 06</div>
+      <div class="slide-content">
+        <div class="ending">
+          有時候，<br>承認辛苦，<br>比堅強更需要勇氣。
+        </div>
+        <div class="highlight" style="margin-top: 30px;">
+          <p>你今日願意打出呢段文字，<br>可能已經係第一步。</p>
+        </div>
+        <div class="subtitle-text" style="margin-top: 24px;">指月 · 觀心隨筆</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div class="controls-container">
+  <div class="nav-dots" id="dots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+    <div class="dot" data-index="5"></div>
+  </div>
+</div>
+<script>
+  const c = document.getElementById('carousel');
+  const d = document.querySelectorAll('.dot');
+  c.addEventListener('scroll', () => {
+    const i = Math.round(c.scrollLeft / c.offsetWidth);
+    d.forEach((dot, idx) => dot.classList.toggle('active', idx === i));
+  });
+  d.forEach(dot => dot.addEventListener('click', e => {
+    c.scrollTo({ left: parseInt(e.target.dataset.index) * c.offsetWidth, behavior: 'smooth' });
+  }));
+</script>
+</body>
+</html>
