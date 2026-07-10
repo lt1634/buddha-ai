@@ -412,6 +412,10 @@ def parse_full_judge_output(raw, rubrics):
             continue
 
         rdata = data[rid]
+        # Judge 可能回傳純數字而非 dict（e.g. "empathy_first": 5）
+        if isinstance(rdata, (int, float)):
+            data[rid] = {"score": int(rdata), "reason": ""}
+            continue
         if r.get("type") == "composite":
             sub_scores = rdata.get("sub_scores", {})
             if not sub_scores:

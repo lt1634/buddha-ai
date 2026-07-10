@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: #f5f0eb; font-family: system-ui, -apple-system, sans-serif; }
+
+.slide {
+  width: 1080px;
+  height: 1350px;
+  background: linear-gradient(#f8f1e3, #f0e6d2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 72px 60px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+
+.slide-header {
+  font-size: 15px;
+  color: #a89279;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.slide-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 28px;
+}
+
+.slide-footer {
+  border-top: 1px solid #d4c4b0;
+  padding-top: 18px;
+  font-size: 14px;
+  color: #a89279;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.story-text {
+  font-size: 22px;
+  line-height: 1.85;
+  color: #3f2a1e;
+}
+
+.highlight {
+  background: #fff8e1;
+  border-left: 6px solid #d4a373;
+  border-radius: 18px;
+  padding: 22px 28px;
+  font-size: 21px;
+  line-height: 1.8;
+  color: #3f2a1e;
+}
+
+.highlight strong {
+  color: #8b6914;
+}
+
+.concept-tag {
+  display: inline-block;
+  background: #3f2a1e;
+  color: #f8f1e3;
+  padding: 8px 20px;
+  border-radius: 24px;
+  font-size: 15px;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.title-big {
+  font-size: 38px;
+  font-weight: 700;
+  color: #3f2a1e;
+  line-height: 1.5;
+  letter-spacing: -0.5px;
+}
+
+.title-sub {
+  font-size: 20px;
+  color: #7a6652;
+  line-height: 1.7;
+  margin-top: 12px;
+}
+
+.divider {
+  width: 60px;
+  height: 3px;
+  background: #d4a373;
+  border-radius: 2px;
+  margin: 8px 0;
+}
+
+.scene-break {
+  font-size: 16px;
+  color: #a89279;
+  letter-spacing: 4px;
+  text-align: center;
+  margin: 12px 0;
+}
+
+.quote-block {
+  background: rgba(63, 42, 30, 0.06);
+  border-radius: 20px;
+  padding: 28px 32px;
+  font-size: 20px;
+  line-height: 1.8;
+  color: #5a4636;
+  font-style: italic;
+}
+
+.emphasis-line {
+  font-size: 26px;
+  font-weight: 600;
+  color: #3f2a1e;
+  line-height: 1.6;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.dim-text {
+  font-size: 18px;
+  color: #8a7a6a;
+  line-height: 1.7;
+}
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 -->
+<div class="slide slide-1">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="concept-tag">Chapter 1</div>
+    <div class="title-big">公司走廊嘅燈壞咗三個禮拜。</div>
+    <div class="story-text">
+      冇人報修。<br>
+      大家都行過，<br>
+      黑黑哋，<br>
+      小心啲就係。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>1 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="slide slide-2">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="story-text">
+      佢行過，停低，<br>
+      打電話俾管理處，<br>
+      話咗個燈嘅位置，<br>
+      然後繼續返去開會。
+    </div>
+    <div class="divider"></div>
+    <div class="story-text">
+      一個禮拜後，燈修好咗。
+    </div>
+    <div class="highlight">
+      但行政部發咗封郵件：<br><br>
+      <strong>「非授權人員請勿自行聯繫管理處報修，<br>請經正式渠道提交表格。」</strong>
+    </div>
+    <div class="story-text">
+      佢睇完，冇出聲。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>2 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="slide slide-3">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="concept-tag">Chapter 2</div>
+    <div class="story-text">
+      之後公司 server 房冷氣壞咗。<br>
+      資料中心溫度飆升，<br>
+      IT 同事驚到面青。
+    </div>
+    <div class="story-text">
+      佢見到，行去行政部<br>
+      填咗張維修單。<br>
+      等咗兩日，冇人理。
+    </div>
+    <div class="story-text">
+      第三日佢直接打俾冷氣承辦商，<br>
+      約咗人上門。<br>
+      冷氣即日修好。Server 冇事。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>3 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 4 -->
+<div class="slide slide-4">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="story-text">
+      行政主管搵佢：
+    </div>
+    <div class="highlight">
+      <strong>「你點解唔經程序？<br>你知唔知外邊承辦商未入圍，<br>財務批唔到數？」</strong>
+    </div>
+    <div class="story-text">
+      佢話：「因為 server 再熱兩個鐘就會當機。」
+    </div>
+    <div class="highlight">
+      主管話：<br>
+      <strong>「下次記得行程序。」</strong>
+    </div>
+    <div class="story-text">
+      佢點頭。<br>
+      心入面冇講出口嗰句係——
+    </div>
+    <div class="emphasis-line">
+      如果你行程序有用，<br>我就唔使行。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>4 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 5 -->
+<div class="slide slide-5">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="concept-tag">Chapter 3</div>
+    <div class="story-text">
+      佢開始明白一件事：
+    </div>
+    <div class="emphasis-line">
+      呢個世界唔係獎勵解決問題嘅人。<br>
+      呢個世界獎勵跟規矩嘅人。
+    </div>
+    <div class="divider"></div>
+    <div class="quote-block">
+      你解決咗問題，但你冇填表 → 你有責任。<br><br>
+      你冇解決到問題，但你填咗表 → 你冇責任。
+    </div>
+    <div class="emphasis-line" style="font-size: 24px; margin-top: 12px;">
+      制度保護嘅唔係效果，係程序。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>5 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="slide slide-6">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="story-text">
+      佢試過好嬲。<br>
+      試過覺得不公平。<br>
+      試過想：<br><br>
+      「咁我以後乜都唔好做，<br>跟程序等就得。」
+    </div>
+    <div class="divider"></div>
+    <div class="story-text">
+      但佢做唔到。
+    </div>
+    <div class="highlight">
+      因為佢見到 server 會當機，佢會打電話。<br>
+      見到同事驚，佢會頂住。
+    </div>
+    <div class="emphasis-line" style="font-size: 24px;">
+      佢嘅本能係解決問題。<br>
+      但個體制懲罰嘅，<br>
+      正正就係呢種本能。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>6 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 7 -->
+<div class="slide slide-7">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="concept-tag">Chapter 4</div>
+    <div class="story-text">
+      有一晚佢返到屋企，<br>
+      坐喺沙發，<br>
+      望住個天花板嘅燈。
+    </div>
+    <div class="story-text">
+      佢諗起細個，阿嫲同佢講：
+    </div>
+    <div class="quote-block">
+      「你識補鞋，<br>
+      唔代表每對爛鞋你都要補。<br><br>
+      有啲鞋，<br>
+      佢嘅主人根本唔想修。<br><br>
+      你補咗，<br>
+      佢仲怪你弄髒佢對鞋。」
+    </div>
+    <div class="story-text">
+      佢嗰陣聽唔明。<br>
+      而家佢聽明咗。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>向右滑 →</span>
+    <span>7 / 8</span>
+  </div>
+</div>
+
+<!-- SLIDE 8 -->
+<div class="slide slide-8">
+  <div class="slide-header">補鞋匠</div>
+  <div class="slide-content">
+    <div class="emphasis-line" style="font-size: 28px; line-height: 1.7;">
+      你嘅能力，<br>
+      唔需要喺每一個唔值得嘅系統入面燃燒。
+    </div>
+    <div class="divider" style="margin: 16px auto;"></div>
+    <div class="story-text" style="text-align: center;">
+      有啲系統，<br>
+      佢嘅問題唔係冇人解決，<br>
+      而係佢根本唔想被解決。<br><br>
+      你衝過去補，<br>
+      佢唔會多謝你。<br>
+      佢會問你：<br>
+      你點解冇填表？
+    </div>
+    <div class="divider"></div>
+    <div class="scene-break">— ✦ —</div>
+    <div class="emphasis-line" style="font-size: 24px; color: #7a6652;">
+      嗰盞燈壞咗三個禮拜。
+    </div>
+    <div class="story-text" style="text-align: center; color: #7a6652;">
+      佢冇打電話。<br><br>
+      行過，黑黑哋，<br>
+      佢小心啲，就係。
+    </div>
+  </div>
+  <div class="slide-footer">
+    <span>完</span>
+    <span>8 / 8</span>
+  </div>
+</div>
+
+</body>
+</html>
