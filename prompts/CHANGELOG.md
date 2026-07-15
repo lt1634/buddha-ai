@@ -4,6 +4,24 @@
 
 ---
 
+## 2026-07-15 | restructure | 紅線置頂 + dump/reframe + 支柱表 + rubric/case 同步
+
+**改動（P0–P2 全修）：**
+- `system-prompt.md` 重構三層：① 紅線 10 條（頂）② 說話原則+節奏+dump/reframe+心理學可用不可用+苦→支柱 ③ 熱線格式/危機細節/範例
+- 全局優先級寫死：**紅線 > 同理 > 觀照 > 行動**
+- 新 section：大量情緒 dump 與 reframe 時機（LEARNINGS #3）；心理學對接可用／不可用
+- 嵌入 CONTENT-PILLARS「苦→支柱」決策表（精簡版）
+- `rubrics.yaml`：行號 → section anchors；新增 `pillar_fit`（weight 2）；binary rubrics 加 scoring_examples；`empathy_first` 改查開場 1–2 句
+- `cases.yaml`：+8 cases（021–028）— 遺書式、計劃式、青少年凌晨、家暴、真危機對照、dump、口頭禪對照、家暴陰影 → crisis 合計 9、borderline 合計 7
+- `README.md`：目標受眾改為「成人與青少年為主；3-10歲以家長引導模式服務」
+- `CASE-INDEX.md` 同步
+
+**原因：** 專案審查 P0–P2（rubric 行號漂移、危機 case 覆蓋不足、prompt 優先級不清、reframe 過早、受眾表述過闊）。
+
+**Eval 結果：** 待下次 live suite。
+
+---
+
 ## 2026-07-06 | `4cd4c4b` | 禁字規則強化 + borderline 支援 + eval retry
 
 **改動：**
