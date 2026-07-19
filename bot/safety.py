@@ -24,9 +24,21 @@ __all__ = [
     "log_crisis",
 ]
 
-# ---- 危機關鍵字（user input 攔截）----
+# ---- Negation context：呢類用法唔係危機意圖，唔攔截 ----
+_NEGATION_CONTEXTS = [
+    r"避免.*(?:自殺|死)", r"防止.*(?:自殺|死)", r"預防.*(?:自殺|死)",
+    r"減少.*(?:自殺|死)", r"降低.*(?:自殺|死)",
+    r"監控.*(?:心理|情緒|自殺)", r"監察.*(?:心理|情緒|自殺)",
+    r"自殺傾向", r"自殺率", r"自殺新聞", r"自殺案例",
+    r"關於.*自殺", r"探討.*自殺", r"討論.*自殺",
+    r"教育.*(?:自殺|死)", r"認識.*(?:自殺|死)",
+    r"學生.*(?:自殺|死)", r"學校.*(?:自殺|死)",
+]
+_NEGATION_PATTERN = re.compile("|".join(_NEGATION_CONTEXTS), re.IGNORECASE)
+
+# ---- Crisis keywords（user input 攔截）----
 CRISIS_KEYWORDS = [
-    r"自殺", r"唔想生存", r"唔想活",
+    r"唔想生存", r"唔想活",
     r"了結自己", r"結束生命", r"唔存在就好",
     r"想消失咗就好", r"走咗就好",
     r"唔存在咗", r"死咗就好", r"死咗就算", r"死咗無人知",
@@ -36,6 +48,10 @@ CRISIS_KEYWORDS = [
     r"食藥自殺", r"上吊", r"跳橋自盡", r"割脈",
     r"自殘", r"割自己", r"𠝹手", r"傷害自己",
     r"已經準備", r"寫好遺書", r"諗好方法", r"準備好方法",
+    # 明確意圖詞 + 自殺：需要動作詞先行
+    # 注意：口頭禪式「好攰想死」「熱到想死」靠 negation 或 LLM 判斷，
+    # 呢度只攔截明確意圖，唔好 overscope
+    r"(?:打算自殺|準備自殺|要自殺|不如死咗|想自殺)",
 ]
 
 OUTPUT_FORBIDDEN = [
@@ -50,7 +66,15 @@ DEFAULT_LOG_DIR = BOT_DIR / "logs"
 
 
 def detect_crisis(text: str) -> bool:
-    """檢測 user message 是否包含危機關鍵字。"""
+    """檢測 user message 是否包含危機關鍵字。
+
+    優先檢查 negation context（避免/防止/監察/討論等），
+    如果匹配到 negation 就放過，交俾 LLM 語境判斷。
+    """
+    # Negation check first — if text is about discussing/preventing suicide,
+    # it's not a crisis intent.
+    if _NEGATION_PATTERN.search(text):
+        return False
     return bool(_crisis_pattern.search(text))
 
 
