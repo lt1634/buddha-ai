@@ -104,6 +104,11 @@ async def handle_message(
         max_tokens=bot_app.config.llm_max_tokens,
     )
 
+    # Hard limit: 500 characters
+    MAX_RESPONSE_LEN = 500
+    if len(llm_response) > MAX_RESPONSE_LEN:
+        llm_response = llm_response[:MAX_RESPONSE_LEN].rsplit(" ", 1)[0] + "……"
+
     if bot_app.session.crisis_rounds[user_id] > 0 and not check_output_safety(
         llm_response
     ):
