@@ -31,25 +31,40 @@ async def call_llm(
     *,
     model: str,
     max_tokens: int,
+    max_chars: int = 500,
+    max_retries: int = 2,
 ) -> str:
-    """Call the LLM API and return response text."""
-    try:
-        response = await client.chat.completions.create(
-            model=model,
-            messages=messages,
-            max_tokens=max_tokens,
-            temperature=0.7,
-        )
-        content = response.choices[0].message.content
-        finish_reason = response.choices[0].finish_reason
+    """Call the LLM API and return response text. Auto-regenerate if over max_chars."""
+    content = "……"
+    for attempt in range(max_retries + 1):
+        try:
+            response = await client.chat.completions.create(
+                model=model,
+                messages=messages,
+                max_tokens=max_tokens,
+                temperature=0.7,
+            )
+            content = response.choices[0].message.content
+            finish_reason = response.choices[0].finish_reason
 
-        if not content and finish_reason == "length":
-            return "（系統提示：回應被截斷，請再試一次。）"
+            if not content and finish_reason == "length":
+                return "（系統提示：回應被截斷，請再試一次。）"
 
-        return content or "……"
-    except Exception as exc:
-        print(f"LLM Error: {exc}")
-        return "我而家聽唔到你，可以再講多一次嗎？"
+            content = content or "……"
+
+            if len(content) <= max_chars or attempt == max_retries:
+                return content
+
+            # Over limit — retry with a reminder
+            messages = messages + [
+                {"role": "assistant", "content": content},
+                {"role": "system", "content": f"你嘅回應有 {len(content)} 字元，超過 {max_chars} 字元上限。請重新回覆，嚴格控制喺 {max_chars} 字元以內。保留核心信息，刪減多餘內容。"},
+            ]
+        except Exception as exc:
+            print(f"LLM Error: {exc}")
+            return "我而家聽唔到你，可以再講多一次嗎？"
+
+    return content
 
 
 def trim_history(
