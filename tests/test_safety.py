@@ -1,6 +1,6 @@
 """Tests for bot/safety.py crisis detection and hotline helpers."""
 
-from safety import (
+from bot.safety import (
     build_hotline_card,
     build_safety_fallback,
     check_output_safety,
@@ -17,7 +17,12 @@ def test_crisis_method_keyword():
 
 
 def test_crisis_specific_plan():
-    assert detect_crisis("我已經準備好方法")
+    assert detect_crisis("我已經準備好自殺方法")
+
+
+def test_generic_preparation_is_not_crisis():
+    assert not detect_crisis("我已經準備好明日嘅考試")
+    assert not detect_crisis("我諗好方法同父母溝通")
 
 
 def test_crisis_self_harm():

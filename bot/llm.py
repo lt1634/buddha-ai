@@ -25,6 +25,17 @@ def create_llm_client(config: BotConfig) -> AsyncOpenAI:
     )
 
 
+def truncate_response(content: str, max_chars: int) -> str:
+    """Return *content* within the configured character limit."""
+    if len(content) <= max_chars:
+        return content
+    if max_chars <= 0:
+        return ""
+    if max_chars == 1:
+        return "…"
+    return content[: max_chars - 1].rstrip() + "…"
+
+
 async def call_llm(
     client: AsyncOpenAI,
     messages: list[dict[str, str]],
@@ -52,8 +63,10 @@ async def call_llm(
 
             content = content or "……"
 
-            if len(content) <= max_chars or attempt == max_retries:
+            if len(content) <= max_chars:
                 return content
+            if attempt == max_retries:
+                return truncate_response(content, max_chars)
 
             # Over limit — retry with a reminder
             messages = messages + [

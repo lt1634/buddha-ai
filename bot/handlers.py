@@ -16,7 +16,7 @@ from bot.models import (
     model_short_name,
     set_user_model,
 )
-from safety import (
+from bot.safety import (
     DECLARATION,
     build_hotline_card,
     build_safety_fallback,

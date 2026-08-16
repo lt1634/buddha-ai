@@ -2,7 +2,7 @@
 
 import json
 
-import run as eval_run
+from eval import run as eval_run
 
 
 SAMPLE_RUBRICS = [
