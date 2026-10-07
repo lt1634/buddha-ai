@@ -17,11 +17,18 @@ def load_system_prompt(path: Path) -> str:
     return "你是一位善知識，用佛學智慧同心理學方法陪伴使用者。"
 
 
-def create_llm_client(config: BotConfig) -> AsyncOpenAI:
-    """Build an async OpenAI-compatible client from *config*."""
+def create_llm_client(config: BotConfig, session_id: str = "buddha-ai-bot") -> AsyncOpenAI:
+    """Build an async OpenAI-compatible client from *config*.
+    
+    Sends x-opencode-session header required by OpenCode Go for routing.
+    """
     return AsyncOpenAI(
         api_key=config.llm_api_key,
         base_url=config.llm_base_url,
+        default_headers={
+            "x-opencode-session": session_id,
+            "User-Agent": "buddha-ai-bot/1.0",
+        },
     )
 
 
@@ -42,8 +49,9 @@ async def call_llm(
     *,
     model: str,
     max_tokens: int,
-    max_chars: int = 500,
+    max_chars: int = 4096,
     max_retries: int = 2,
+    session_id: str = "buddha-ai-bot",
 ) -> str:
     """Call the LLM API and return response text. Auto-regenerate if over max_chars."""
     content = "……"
