@@ -42,3 +42,7 @@ bot/logs/
 
 # Pytest
 .pytest_cache/
+
+# Logs
+*.log
+bot/bot.log
