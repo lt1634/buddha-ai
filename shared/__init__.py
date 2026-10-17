@@ -1,4 +1,4 @@
-"""Shared utilities for buddha-ai bot and eval."""
+"""Shared utilities for buddha-ai (safety, hotlines, paths)."""
 
 from shared.hotlines import (
     HOTLINES,
@@ -8,7 +8,13 @@ from shared.hotlines import (
     hotlines_for_eval_check,
 )
 from shared.env import load_env_file
-from shared.paths import PROJECT_ROOT, PROMPTS_DIR, SYSTEM_PROMPT_PATH
+from shared.paths import PROJECT_ROOT, PROMPTS_DIR, SYSTEM_PROMPT_PATH, EVAL_DIR
+from shared.safety import (
+    DECLARATION,
+    check_output_safety,
+    detect_crisis,
+    log_crisis,
+)
 
 __all__ = [
     "HOTLINES",
@@ -20,4 +26,9 @@ __all__ = [
     "PROJECT_ROOT",
     "PROMPTS_DIR",
     "SYSTEM_PROMPT_PATH",
+    "EVAL_DIR",
+    "DECLARATION",
+    "check_output_safety",
+    "detect_crisis",
+    "log_crisis",
 ]

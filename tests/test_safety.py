@@ -1,6 +1,6 @@
-"""Tests for bot/safety.py crisis detection and hotline helpers."""
+"""Tests for shared/safety.py crisis detection and hotline helpers."""
 
-from bot.safety import (
+from shared.safety import (
     build_hotline_card,
     build_safety_fallback,
     check_output_safety,
