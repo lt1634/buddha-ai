@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>指月 Carousel 3 — 橙好甜</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    min-height: 100vh; padding: 30px 20px; overflow-x: hidden;
+  }
+
+  .carousel-wrapper { position: relative; width: 100%; max-width: 440px; margin: 0 auto; }
+  .carousel-container {
+    display: flex; gap: 20px; overflow-x: auto;
+    scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding: 15px 10px 30px 10px;
+  }
+  .carousel-container::-webkit-scrollbar { display: none; }
+
+  .slide {
+    flex: 0 0 100%; width: 100%; height: 520px;
+    background: linear-gradient(#f8f1e3, #f0e6d2);
+    color: #3f2a1e;
+    border-radius: 24px; position: relative; overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.4), 0 5px 15px rgba(0,0,0,0.2);
+    scroll-snap-align: center; display: flex; flex-direction: column;
+    justify-content: space-between; padding: 48px 36px;
+    line-height: 1.85; font-size: 18px;
+  }
+
+  .slide-header { font-size: 11px; letter-spacing: 2px; color: #8c6f5c; font-weight: 400; }
+  .slide-content { display: flex; flex-direction: column; justify-content: center; flex-grow: 1; }
+  .slide-footer { font-size: 11px; color: #8c6f5c; letter-spacing: 1px; text-align: center; padding-top: 16px; border-top: 1px solid rgba(140,111,92,0.15); }
+
+  .slide-content p { margin-bottom: 16px; }
+  .highlight {
+    background: #fff8e1; padding: 25px; border-radius: 18px;
+    border-left: 6px solid #d4a373; margin: 25px 0;
+  }
+  .main-title {
+    text-align: center; color: #5c4033; font-size: 32px;
+    font-weight: 700; margin-bottom: 20px; line-height: 1.5;
+  }
+  .subtitle-text { text-align: center; color: #8c6f5c; font-size: 15px; margin-top: 20px; }
+  .ending { text-align: center; font-size: 22px; color: #5c4033; margin-top: 40px; font-weight: 600; }
+
+  /* Controls */
+  .controls-container { display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 20px; }
+  .nav-dots { display: flex; gap: 8px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #8c6f5c44; transition: all 0.3s ease; cursor: pointer; }
+  .dot.active { background: #d4a373; transform: scale(1.3); box-shadow: 0 0 8px #d4a37388; }
+  .nav-hint { color: #8c6f5c; font-size: 12px; letter-spacing: 2px; }
+</style>
+</head>
+<body>
+
+<div class="carousel-wrapper">
+  <div class="carousel-container" id="carousel">
+
+    <!-- Slide 1 -->
+    <div class="slide slide-1" data-index="0">
+      <div class="slide-header">01 / 06</div>
+      <div class="slide-content">
+        <div class="main-title">我今年80歲。</div>
+        <p>今日天氣幾好，我坐喺公園長椅度睇小朋友放風箏。</p>
+        <p>Audrey 嚟嗰陣，我已經飲咗半杯凍咖啡，杯身啲水珠滴到條褲，濕咗一橛。</p>
+        <div class="highlight">
+          <p>Audrey：「老豆，你又唔帶帽。」</p>
+          <p>我：「帶咗帽睇唔到個天。」</p>
+        </div>
+      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="slide slide-2" data-index="1">
+      <div class="slide-header">02 / 06</div>
+      <div class="slide-content">
+        <p>佢剝咗個橙遞過嚟，我接住，啲汁沿住手指罅流落嚟。</p>
+        <p>我：「你記唔記得你細個嗰陣，我哋喺沙灘睇日落？」</p>
+        <div class="highlight">
+          <p>Audrey：「記得。你話人類好渺小。」</p>
+          <p>我：「你話我傻。」</p>
+        </div>
+        <p>佢笑住講：「你而家都仲係。不過老咗，傻得溫柔咗。」</p>
+      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="slide slide-3" data-index="2">
+      <div class="slide-header">03 / 06</div>
+      <div class="slide-content">
+        <p>Audrey：「其實我記得商場嗰次。」</p>
+        <div class="highlight">
+          <p>我：「你頭先已經講過嘞。」</p>
+          <p>Audrey：「我想講嘅係——你蹲低嗰下，我已經唔喊了。唔係因為你講咗啲咩，係因為你喺度。」</p>
+        </div>
+      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
+    </div>
+
+    <!-- Slide 4 -->
+    <div class="slide slide-4" data-index="3">
+      <div class="slide-header">04 / 06</div>
+      <div class="slide-content">
+        <p>Audrey：「老豆，你有冇後悔過？」</p>
+        <div class="highlight">
+          <p>我：「後悔咩？」</p>
+          <p>Audrey：「有得升職唔升。」</p>
+        </div>
+        <p>我搖搖頭：「你嗰陣4歲，仲喺商場地下大喊大尖叫。我點解要為咗一個 title 放棄蹲低陪你喊嘅機會？」</p>
+      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
+    </div>
+
+    <!-- Slide 5 -->
+    <div class="slide slide-5" data-index="4">
+      <div class="slide-header">05 / 06</div>
+      <div class="slide-content">
+        <p>我冇再出聲。</p>
+        <p>因為有啲嘢唔需要答。</p>
+        <div class="highlight">
+          <p>就好似42年前嗰個廚房個廚房嘅下午，佢食住橙話「好甜」，我咩都冇講，淨係坐喺度。</p>
+        </div>
+        <p>有啲時刻，沉默就係最完整嘅對話。</p>
+      </div>
+      <div class="slide-footer">→ 向右滑下一頁</div>
+    </div>
+
+    <!-- Slide 6 -->
+    <div class="slide slide-6" data-index="5">
+      <div class="slide-header">06 / 06</div>
+      <div class="slide-content">
+        <p>我哋慢慢行去停車場。</p>
+        <p>冇講再見，因為佢等陣會車我返屋企。</p>
+        <div class="highlight">
+          <p>就好似佢從4歲到46歲，每一次都一樣。</p>
+        </div>
+        <div class="ending">—— 完 ——</div>
+      </div>
+      <div class="slide-footer">指月 · 橙好甜</div>
+    </div>
+
+  </div>
+</div>
+
+<div class="controls-container">
+  <div class="nav-dots" id="dots">
+    <div class="dot active" data-index="0"></div>
+    <div class="dot" data-index="1"></div>
+    <div class="dot" data-index="2"></div>
+    <div class="dot" data-index="3"></div>
+    <div class="dot" data-index="4"></div>
+    <div class="dot" data-index="5"></div>
+  </div>
+  <p class="nav-hint">左右滑動或點擊圓點預覽</p>
+</div>
+
+<script>
+  const carousel = document.getElementById('carousel');
+  const dots = document.querySelectorAll('.dot');
+  carousel.addEventListener('scroll', () => {
+    const width = carousel.offsetWidth;
+    const activeIndex = Math.round(carousel.scrollLeft / width);
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex));
+  });
+  dots.forEach(dot => {
+    dot.addEventListener('click', (e) => {
+      const i = parseInt(e.target.dataset.index);
+      carousel.scrollTo({ left: i * carousel.offsetWidth, behavior: 'smooth' });
+    });
+  });
+</script>
+
+</body>
+</html>
